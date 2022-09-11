@@ -1,0 +1,72 @@
+.home_dash {
+  padding: 10px;
+}
+.home_dash .header,
+.home_dash .body {
+  padding: 10px 0;
+}
+.box_ {
+  background: #8360c3; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #2ebf91,
+    #8360c3
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #2ebf91,
+    #8360c3
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  margin: 10px;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.06) 0px 4px 6px -2px;
+  border-radius: 10px;
+  align-items: center;
+}
+.home_dash .header .box_ .title {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  gap: 33px;
+}
+.title {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #fff;
+}
+.text {
+  font-size: large;
+  font-weight: bold;
+}
+.home_dash .header .box_ .content {
+  padding: 20px 0;
+}
+
+.home_dash .header .box_ .content span {
+  color: var(--antd-wave-shadow-color);
+  font-weight: 700;
+  font-size: 40px;
+  color: #fff;
+}
+.home_dash .header .box_ .content h3 {
+  color: var(--antd-wave-shadow-color);
+  font-weight: 800;
+  color: #fff;
+}
+.table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table > .th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.tr:nth-child(even) {
+  background-color: #dddddd;
+}
