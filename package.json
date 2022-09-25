@@ -11,7 +11,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "antd": "^4.16.13",
+    "antd": "^4.19.5",
     "axios": "^0.23.0",
     "dotenv": "^10.0.0",
     "mapbox-gl": "^2.7.0",

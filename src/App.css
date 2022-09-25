@@ -21,4 +21,23 @@
 .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
   border-right-color: #000 !important;
 }
+
+.passengers-title {
+position: relative;
+width: fit-content;
+}
+.passengers-title::before {
+  content: "";
+  position: absolute;
+    right: -30px;
+    top: 14px;
+    width: 10px;
+    height: 10px;
+  border-radius: 50%;
+  background-color: green;
+}
+
+.passengers-title.off::before {
+  background-color: #838383;
+}
 /* customize map popup */
