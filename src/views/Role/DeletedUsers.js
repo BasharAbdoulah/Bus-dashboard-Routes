@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 //component
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { Form, Space, Dropdown, Menu, Table, message, Modal } from "antd";
 import { LockOutlined, UnlockOutlined, WarningFilled } from "@ant-design/icons";
@@ -13,28 +13,13 @@ import {
     DownOutlined,
 } from "@ant-design/icons";
 import useFetch from "hooks/useFetch";
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-const Users = () => {
+const DeletedUsers = () => {
     const onSearch = (value) => console.log(value);
     const [currentPage, setCurrentPage] = useState(1);
     const [tableData, setTableData] = useState([]);
     const history = useHistory()
-    const search = history.location.search
-    const states = useSelector((state) => state.auth);
-    const [rerender, setrerender] = useState(false)
-    // ?id=72c66ad3-b183-4e5f-8c7a-c8f4a77f816b&name=96597333839&phone=96597333839
-    const idFromPathName = search.substring(search.indexOf("=") +1, search.indexOf("&"))
-    console.log(idFromPathName)
-    useEffect(() => {
-        console.log("state", states.token)
-        console.log("history", history.location.search)
-    }, [history.location.search])
+    const pathName = history.location.pathname
 
-
-    
-    console.log("render")
-    
     const {
         data = [],
         error,
@@ -174,13 +159,6 @@ const Users = () => {
                         Chargings
                     </Link>
                 </Menu.Item>
-                <Menu.Item key="4">
-                    <Link
-                        to={`/Users?id=${data.id}&name=${data.userName}&phone=${data.phone}`}
-                    >
-                        Delete
-                    </Link>
-                </Menu.Item>
             </Menu>
         );
         return (
@@ -212,11 +190,6 @@ const Users = () => {
             title: "phone",
             dataIndex: "phone",
             key: "phone",
-        },
-        {
-            title: "Wallet",
-            dataIndex: "phone",
-            key: "Wallet",
         },
 
         {
@@ -288,4 +261,4 @@ const Users = () => {
         </div>
     );
 };
-export default Users;
+export default DeletedUsers;

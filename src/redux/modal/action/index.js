@@ -22,3 +22,16 @@ export const closeModal =
     console.log("Close Modal Dispatch");
     dispatch({ type: constants.CLOSE_MODAL, payload: modalType });
   };
+
+export const panelPaymentValue = (value ,dispatch) => {
+    
+    dispatch({ type: constants.PANEL_PAYMENTS_VALUE, payload: value });
+  };
+
+
+  // export const panelPaymentValue = (value) => {
+  //   return {
+  //     type: constants.PANEL_PAYMENTS_VALUE,
+  //     paymentValue: value
+  //   }
+  // }

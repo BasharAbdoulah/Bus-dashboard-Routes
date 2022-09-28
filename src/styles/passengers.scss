@@ -1,0 +1,42 @@
+.table {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .table-thead {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        background-color: #efefef;
+        padding: 7px 114px 7px 10px;
+        h3{
+            margin: 0;
+            padding: 0px 10px;
+            font-size: 13px;
+            &:not(:first-child) {
+                border-left: 1px solid rgba(153, 153, 153, 0.768);
+            }
+        }
+        
+        
+    }
+    .table-tbody {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .table-colomn {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+
+            p {
+                margin: 0;
+            }
+        }
+    }
+}

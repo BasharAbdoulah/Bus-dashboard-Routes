@@ -12,9 +12,11 @@ import { Pie } from "@ant-design/plots";
 import style from "./style.module.css";
 import { FaRoute } from "react-icons/fa";
 import { notification } from "antd";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import axios from "axios";
 import ReactAudioPlayer from "react-audio-player";
+import { panelPaymentValue } from "redux/modal/action";
+import { PANEL_PAYMENTS_VALUE } from "redux/modal/constants";
 const audio = new Audio("/sounds/pristine-609.mp3");
 
 const Home = ({ token, role, companyID }) => {
@@ -26,6 +28,8 @@ const Home = ({ token, role, companyID }) => {
     const [popoverShow, setPopoverShow] = useState(false);
     const [paymentLiveBus, setPaymentLiveBus] = useState([]);
     const [play] = useSound("/sounds/guitar-loop.mp3", { volume: 2.25 });
+    const dispatch = useDispatch()
+    
     // const [play] = useSound(beep, { interrupt: true });
 
     // const openNotification = useCallback((message) => {
@@ -192,8 +196,6 @@ const Home = ({ token, role, companyID }) => {
         return () => {};
     }, []);
 
-    console.log("connection", connection);
-
     useEffect(() => {
         const getData = async () => {
             const { data: CountPaymentData } = await axios.get(
@@ -266,9 +268,11 @@ const Home = ({ token, role, companyID }) => {
         console.log("ddgdgd");
         getData();
     }, []);
+
     useEffect(() => {
-        // window.addEventListener("click", overlayClick);
+        // window.addEventListener("click", overlayClick) PaymentLive;
         if (connection) {
+            
             if (!connection.connectionStarted) {
                 connection
                     .start()
@@ -353,8 +357,14 @@ const Home = ({ token, role, companyID }) => {
                                 value: parseFloat(string).toFixed(3),
                             });
                         });
+
+                        connection.on("PaymentLive", (string) => {
+                            audio?.play();
+                            console.log("PaymentLive string");
+                            console.log(string);
+                        });
                     })
-                    .catch((err) => alert("Failed To Connect"));
+                    .catch((err) => console.error("Failed To Connect", err));
             }
         }
         // else {
@@ -366,7 +376,8 @@ const Home = ({ token, role, companyID }) => {
 
     console.log("[tripCount, CountCharge, CountPayment]");
     console.log([tripCount, CountCharge, CountPayment]);
-
+    
+    
     let config = {
         appendPadding: 10,
         data: [CountCharge, CountPayment, SumCharge, SumPayment, tripCount],
@@ -389,6 +400,7 @@ const Home = ({ token, role, companyID }) => {
         ],
     };
     console.log("Sum", SumPayment);
+    panelPaymentValue(5555, dispatch)
     const columns = [
         {
             title: "Palte Number ",
@@ -682,7 +694,6 @@ const Home = ({ token, role, companyID }) => {
                                                             Payments
                                                         </h3>
                                                         <span>
-                                                            test{" "}
                                                             {SumPayment.value}
                                                         </span>
                                                     </Col>
@@ -696,6 +707,7 @@ const Home = ({ token, role, companyID }) => {
                                                                     "center",
                                                             }}
                                                         >
+                                                            
                                                             {CountPayment.value}
                                                         </h3>
                                                     </Col>

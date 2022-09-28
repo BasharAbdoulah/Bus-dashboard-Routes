@@ -42,6 +42,9 @@ import InspectorUser from "views/Inspector/InspectorUser";
 import OfflinePassengers from "views/Role/OfflinePassengers";
 import OnlinePassengers from "views/Role/OnlinePassengers";
 import Send from "views/Paymentwallet/Send";
+import DeletedUsers from "views/Role/DeletedUsers";
+import Subscripions from "views/Subscripions/Subscripions";
+import SubscripionsDetails from "views/Subscripions/SubscripionsDetails";
 
 const Router = () => {
     return (
@@ -77,6 +80,21 @@ const Router = () => {
                 exact
                 path="/OnlinePassengers"
                 component={OnlinePassengers}
+            />
+            <MainRoutes
+                exact
+                path="/DeletedUsers"
+                component={DeletedUsers}
+            />
+            <MainRoutes
+                exact
+                path="/Subscripions"
+                component={Subscripions}
+            />
+            <MainRoutes
+                exact
+                path="/Subscripions/SubscripionsDetails"
+                component={SubscripionsDetails}
             />
             <MainRoutes
                 exact

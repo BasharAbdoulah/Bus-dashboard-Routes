@@ -92,6 +92,17 @@ const Send = () => {
         executeFetch: executeFetchByuser,
     } = useFetch("https://route.click68.com/api/ListUser", "post", {}, true);
 
+    const {
+        data: sendData = {},
+        error: sendError,
+        loading: sendLoading,
+        executeFetch: executeFetchBysend,
+    } = useFetch("https://route.click68.com/api/ListUser", "post", {}, true);
+
+    console.log("send data", sendData)
+    console.log("send loading", sendLoading)
+    console.log("send Error", sendError)
+
     const columns = [
         {
             title: "User Name",
@@ -109,10 +120,16 @@ const Send = () => {
             key: "value",
         },
         {
+            title: "Send",
+            dataIndex: "userName",
+            key: "userName",
+        },
+        {
             title: "date",
             dataIndex: "date",
             key: "date",
             render: (data) => {
+                
                 if (data.length > 20)
                     return (
                         <React.Fragment key={data}>
@@ -122,6 +139,8 @@ const Send = () => {
             },
         },
     ];
+    console.log("data by route", dataByRoute)
+    console.log("data by User", dataByUser)
     console.log("formmmm");
     console.log(form.getFieldsValue("RouteID"));
     console.log(form.getFieldsValue("UserID"));
@@ -225,6 +244,8 @@ const Send = () => {
                             ? dataByRoute?.description
                             : form.getFieldValue("UserID")
                             ? dataByUser?.description
+                            : form.getFieldValue("UserID")
+                            ? sendData?.description
                             : tab_data?.data
                     }
                     loading={loading || loadingByroute || userLoading}

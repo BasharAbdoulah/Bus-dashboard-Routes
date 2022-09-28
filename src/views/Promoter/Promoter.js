@@ -78,6 +78,11 @@ const Promoter = ({ openModal }) => {
       key: "id",
     },
     {
+      title: "Wallet",
+      dataIndex: "userName",
+      key: "id",
+    },
+    {
       title: "Phone number",
       dataIndex: "phoneNumber",
       key: "id",

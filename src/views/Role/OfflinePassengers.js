@@ -18,12 +18,13 @@ function OfflinePassengers() {
         true
     );
 
+    
     useEffect(() => {
         // let isFound = tableData.find((d) => d.page === currentPage);
         if (true) executeFetch({ PageNumber: currentPage });
     }, [currentPage]);
 
-    console.log("passengers", data);
+    console.log("passengers", data?.total);
     const columns = [
         {
             title: "User Name",
@@ -59,6 +60,7 @@ function OfflinePassengers() {
     return (
         <div>
             <h2 className="passengers-title off">Offline Passengers</h2>
+            <h4>Number of passengers: <strong>{data?.total}</strong></h4>
             <Table
                 columns={columns}
                 rowKey={"id"}

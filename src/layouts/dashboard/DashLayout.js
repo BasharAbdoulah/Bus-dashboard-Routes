@@ -171,6 +171,9 @@ const DashboardLayout = ({
                                 <Menu.Item key="6">
                                     <Link to="/Users">Users</Link>
                                 </Menu.Item>
+                                <Menu.Item key="6-0">
+                                    <Link to="/DeletedUsers">Deleted Users</Link>
+                                </Menu.Item>
                             </Menu.SubMenu>
                             <Menu.SubMenu key="sub6" title="Passengers">
                                 <Menu.Item key="7">
@@ -228,6 +231,11 @@ const DashboardLayout = ({
                             <Menu.Item key="15">
                                 <Link to="/Chargingwallet">
                                     Charging Wallet
+                                </Link>
+                            </Menu.Item>
+                            <Menu.Item key="115">
+                                <Link to="/Subscripions">
+                                    Subscripions
                                 </Link>
                             </Menu.Item>
                             <Menu.Item key="14">

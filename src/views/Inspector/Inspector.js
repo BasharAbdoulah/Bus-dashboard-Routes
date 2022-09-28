@@ -54,6 +54,11 @@ const Inspector = ({ openModal }) => {
       key: "id",
     },
     {
+      title: "Wallet",
+      dataIndex: "email",
+      key: "id",
+    },
+    {
       title: "Phone",
       dataIndex: "phoneNumber",
       key: "id",
