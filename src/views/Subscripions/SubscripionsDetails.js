@@ -23,7 +23,6 @@ function SubscripionsDetails() {
   );
 
   useEffect(() => {
-    // let isFound = tableData.find((d) => d.page === currentPage);
     if (true) executeFetch({ PageNumber: currentPage });
   }, [currentPage]);
 
