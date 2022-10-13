@@ -15,6 +15,7 @@ import {
 import useFetch from "hooks/useFetch";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
 const Users = () => {
   const onSearch = (value) => console.log(value);
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,18 +24,17 @@ const Users = () => {
   const search = history.location.search;
   const states = useSelector((state) => state.auth);
   const [rerender, setrerender] = useState(false);
-
+  // ?id=72c66ad3-b183-4e5f-8c7a-c8f4a77f816b&name=96597333839&phone=96597333839
+  //98dfcfb2-dbdb-496c-907d-d79a776c8e50
   const idFromPathName = search.substring(
     search.indexOf("=") + 1,
     search.indexOf("&")
   );
   console.log(idFromPathName);
   useEffect(() => {
-    console.log("state", states.token);
+    console.log("state", states);
     console.log("history", history.location.search);
   }, [history.location.search]);
-
-  console.log("render");
 
   const {
     data = [],
@@ -175,13 +175,6 @@ const Users = () => {
             Chargings
           </Link>
         </Menu.Item>
-        <Menu.Item key="4">
-          <Link
-            to={`/Users?id=${data.id}&name=${data.userName}&phone=${data.phone}`}
-          >
-            Delete
-          </Link>
-        </Menu.Item>
       </Menu>
     );
     return (
@@ -261,6 +254,8 @@ const Users = () => {
       },
     },
   ];
+
+  console.log(tableData);
 
   useEffect(() => {
     let isFound = tableData.find((d) => d.page === currentPage);
