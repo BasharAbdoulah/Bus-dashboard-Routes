@@ -1,135 +1,259 @@
 import React, { useEffect, useState } from "react";
 //component
-import {
-  Row,
-  Col,
-  Input,
-  Checkbox,
-  Table,
-  Form,
-  Select,
-  Alert,
-  Empty,
-} from "antd";
+import { Row, Col, Input, Checkbox, Table, Form, Select, Alert } from "antd";
 
 import useFetch from "hooks/useFetch";
-import { SearchOutlined } from "@ant-design/icons";
-import axios, { Axios } from "axios";
-import { useSelector } from "react-redux";
 const { Option } = Select;
 
 const Send = () => {
-  const onSearch = (value) => console.log(value);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [tableData, setTableData] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  const [paymentsList, setPaymentsList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const user = useSelector((state) => state.auth);
+    const onSearch = (value) => console.log(value);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [tableData, setTableData] = useState([]);
 
-  useEffect(async () => {
-    await axios
-      .post(
-        "https://route.click68.com/api/ListCharcheAllSender",
+    const [form] = Form.useForm();
+    const {
+        data = [],
+        error,
+        loading,
+        executeFetch,
+    } = useFetch(
+        "https://route.click68.com/api/ListPaymentWallet",
+        "post",
+        {},
+        true
+    );
+    useEffect(() => {
+        if (data?.status === true && !loading) {
+            // {
+            //   page: ,
+            //   data: [],
+            // }
+            let found = false;
+            for (let i = 0; i < tableData.length; i++) {
+                if (tableData[i].page === currentPage) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found === false) {
+                setTableData((prev) => {
+                    let newData = prev;
+                    newData.push({
+                        page: currentPage,
+                        data: data?.description,
+                    });
+                    return [...newData];
+                });
+            }
+        }
+    }, [data, error, loading]);
+
+    const {
+        data: dataByRoute = {},
+        error: errorByroute,
+        loading: loadingByroute,
+        executeFetch: executeFetchByroute,
+    } = useFetch(
+        "https://route.click68.com/api/ListPaymentWalletByRouyeID",
+        "post",
+        {},
+        true
+    );
+
+    const {
+        data: dataByUser = {},
+        error: errorByUser,
+        loading: loadingByUser,
+        executeFetch: executeFetchByuserId,
+    } = useFetch(
+        "https://route.click68.com/api/ListPaymentWalletByUserID",
+        "post",
+        {},
+        true
+    );
+    console.log("data");
+    console.log(data);
+    const {
+        data: routedata,
+        error: routeError,
+        loading: routeloading,
+        executeFetch: routeexecuteFetch,
+    } = useFetch(
+        process.env.REACT_APP_API_HOST + process.env.REACT_APP_LIST_ROUTE,
+        "post",
+        {},
+        false
+    );
+    const {
+        data: userData = {},
+        error: userError,
+        loading: userLoading,
+        executeFetch: executeFetchByuser,
+    } = useFetch("https://route.click68.com/api/ListUser", "post", {}, true);
+
+    const {
+        data: sendData = {},
+        error: sendError,
+        loading: sendLoading,
+        executeFetch: executeFetchBysend,
+    } = useFetch("https://route.click68.com/api/ListUser", "post", {}, true);
+
+    console.log("send data", sendData)
+    console.log("send loading", sendLoading)
+    console.log("send Error", sendError)
+
+    const columns = [
         {
-          PageNumber: currentPage,
-          id: user.id,
+            title: "User Name",
+            dataIndex: "name",
+            key: "name",
         },
         {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
-      )
-      .then((res) => {
-        if (res?.data.total > 0) {
-          setPaymentsList(res.data.description);
-          setIsLoading(false);
-        } else {
-          setIsEmpty(true);
-          console.log(Error("No payments!!"));
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsEmpty(true);
-      });
-  }, [currentPage]);
+            title: "Route",
+            dataIndex: "routeName",
+            key: "routeName",
+        },
+        {
+            title: "value",
+            dataIndex: "value",
+            key: "value",
+        },
+        {
+            title: "Send",
+            dataIndex: "userName",
+            key: "userName",
+        },
+        {
+            title: "date",
+            dataIndex: "date",
+            key: "date",
+            render: (data) => {
+                
+                if (data.length > 20)
+                    return (
+                        <React.Fragment key={data}>
+                            {data.substring(0, 10)} {data.substring(11, 16)}{" "}
+                        </React.Fragment>
+                    );
+            },
+        },
+    ];
+    console.log("data by route", dataByRoute)
+    console.log("data by User", dataByUser)
+    console.log("formmmm");
+    console.log(form.getFieldsValue("RouteID"));
+    console.log(form.getFieldsValue("UserID"));
+    useEffect(() => {
+        let isFound = tableData.find((d) => d.page === currentPage);
+        if (!isFound) executeFetch({ PageNumber: currentPage });
+    }, [currentPage]);
 
-  const columns = [
-    {
-      title: "Sender",
-      dataIndex: "sender",
-      key: "sender",
-    },
-    {
-      title: "Reciver ",
-      dataIndex: "reciver",
-      key: "reciver",
-    },
-    {
-      title: "value",
-      dataIndex: "value",
-      key: "value",
-    },
-    {
-      title: "Payment date",
-      dataIndex: "payment_Date",
-      key: "payment_Date",
+    let tab_data = tableData.find((i) => i.page === currentPage);
 
-      render: (data) => {
-        if (data.length > 20)
-          return (
-            <React.Fragment key={data}>
-              {data.substring(0, 10)} {data.substring(11, 16)}{" "}
-            </React.Fragment>
-          );
-      },
-    },
-  ];
+    return (
+        <div>
+            <h2>Send</h2>
+            <Form form={form} layout="vertical">
+                <Row gutter={24}>
+                    <Col span={8}>
+                        <Form.Item name="RouteID" label="select route">
+                            <Select
+                                showSearch
+                                placeholder="Select a route"
+                                optionFilterProp="children"
+                                allowClear
+                                // onChange={onChange}
+                                onFocus={() => {
+                                    if (routedata?.description?.length > 0)
+                                        return false;
+                                    routeexecuteFetch({
+                                        PageNumber: 1,
+                                        PageSize: 60,
+                                    });
+                                }}
+                                onSearch={onSearch}
+                                filterOption={(input, option) =>
+                                    option.children
+                                        .toLowerCase()
+                                        .indexOf(input.toLocaleLowerCase()) > 0
+                                }
+                                onChange={(value) => {
+                                    executeFetchByroute({ id: value });
+                                }}
+                            >
+                                {routedata?.description.map((item) => {
+                                    // if (item.id === getData?.description?.routeId )
+                                    return (
+                                        <Option value={item.id}>
+                                            {item.name}
+                                        </Option>
+                                    );
+                                })}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item name="UserID" label="select User">
+                            <Select
+                                showSearch
+                                placeholder="Select a user"
+                                optionFilterProp="children"
+                                allowClear
+                                // onChange={onChange}
+                                onFocus={() => {
+                                    if (userData?.description?.length > 0)
+                                        return false;
+                                    executeFetchByuser();
+                                }}
+                                onSearch={onSearch}
+                                filterOption={(input, option) =>
+                                    option.children
+                                        .toLowerCase()
+                                        .indexOf(input.toLocaleLowerCase()) > 0
+                                }
+                                onChange={(value) => {
+                                    executeFetchByuserId({ id: value });
+                                }}
+                            >
+                                {userData?.description.map((item) => {
+                                    // if (item.id === getData?.description?.routeId )
+                                    return (
+                                        <Option value={item.id}>
+                                            {item.userName}
+                                        </Option>
+                                    );
+                                })}
+                            </Select>
+                        </Form.Item>
+                    </Col>
+                </Row>
 
-  const handleSearch = (e) => {
-    setSearchValue(e.target.value);
-  };
-
-  return (
-    <div>
-      <h2>Send</h2>
-      <Form layout="vertical">
-        <Row gutter={24}>
-          <div className="search-container">
-            <Input
-              placeholder="Search..."
-              onChange={(e) => handleSearch(e)}
-              value={searchValue}
-            />
-            <SearchOutlined className="search-icon" />
-          </div>
-        </Row>
-
-        {isEmpty ? (
-          <Empty />
-        ) : (
-          <Table
-            columns={columns}
-            rowKey={"id"}
-            pagination={{
-              onChange: (page) => {
-                console.log(page);
-                setCurrentPage(page);
-              },
-              total: paymentsList?.length,
-              current: currentPage,
-            }}
-            dataSource={paymentsList}
-            loading={isLoading}
-            size="small"
-          />
-        )}
-      </Form>
-    </div>
-  );
+                <Table
+                    columns={columns}
+                    rowKey={"id"}
+                    pagination={{
+                        onChange: (page) => {
+                            setCurrentPage(page);
+                        },
+                        total: data?.total,
+                        current: currentPage,
+                    }}
+                    dataSource={
+                        form.getFieldValue("RouteID")
+                            ? dataByRoute?.description
+                            : form.getFieldValue("UserID")
+                            ? dataByUser?.description
+                            : form.getFieldValue("UserID")
+                            ? sendData?.description
+                            : tab_data?.data
+                    }
+                    loading={loading || loadingByroute || userLoading}
+                    size="small"
+                />
+            </Form>
+        </div>
+    );
 };
 
 export default Send;

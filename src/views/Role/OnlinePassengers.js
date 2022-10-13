@@ -132,32 +132,121 @@ function OnlinePassengers() {
       dataIndex: "time",
       key: "time",
     },
+    {
+      title: "date",
+      dataIndex: "date",
+      key: "date",
+      render: (data) => {
+        if (data)
+          return (
+            <React.Fragment key={data}>
+              {data.substring(0, 10)} {data.substring(11, 16)}{" "}
+            </React.Fragment>
+          );
+      },
+    },
   ];
-
-  console.log("data", data);
 
   return (
     <div>
       <h2 className="passengers-title on">Online Passengers</h2>
       <h4>
-        Number of passengers:{" "}
-        <strong>{liveCount?.length ? liveCount?.length : 0}</strong>
+        Number of passengers: <strong>{data?.total}</strong>
       </h4>
 
-      <Table
-        columns={columns}
-        rowKey={"id"}
-        pagination={{
-          onChange: (page) => {
-            setCurrentPage(page);
-          },
-          total: liveCount?.length,
-          current: currentPage,
-        }}
-        dataSource={liveCount}
-        loading={loading}
-        size="small"
-      />
+      <div className="table">
+        <div className="table-thead">
+          <h3>Name</h3>
+          <h3>userName</h3>
+          <h3>Value</h3>
+          <h3>Time</h3>
+        </div>
+
+        <div className="table-tbody">
+          <div className="table-colomn">
+            {dataFromLive?.map((item) => {
+              return (
+                <>
+                  <p className="row-item">{item.name}</p>
+                </>
+              );
+            })}
+          </div>
+
+          <div className="table-colomn">
+            {dataFromLive?.map((item) => {
+              return (
+                <>
+                  <p className="row-item">{item.userName}</p>
+                </>
+              );
+            })}
+          </div>
+          <div className="table-colomn">
+            {dataFromLive?.map((item) => {
+              return (
+                <>
+                  <p className="row-item">
+                    {item?.value ? item?.value : "None"}
+                  </p>
+                </>
+              );
+            })}
+          </div>
+          <div className="table-colomn">
+            {dataFromLive?.map((item) => {
+              return (
+                <>
+                  <p className="row-item">{item.time}</p>
+                </>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ##################################### */}
+
+        {loading && <Spin tip="Loading" />}
+        <div className="table-tbody">
+          <div className="table-colomn">
+            {data?.description.map((item) => {
+              return (
+                <>
+                  <p className="row-item">{item.name}</p>
+                </>
+              );
+            })}
+          </div>
+
+          <div className="table-colomn">
+            {data?.description.map((item) => {
+              return (
+                <>
+                  <p className="row-item">{item.userName}</p>
+                </>
+              );
+            })}
+          </div>
+          <div className="table-colomn">
+            {data?.description.map((item) => {
+              return (
+                <>
+                  <p className="row-item">{item.value}</p>
+                </>
+              );
+            })}
+          </div>
+          <div className="table-colomn">
+            {data?.description.map((item) => {
+              return (
+                <>
+                  <p className="row-item">{item.date}</p>
+                </>
+              );
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
