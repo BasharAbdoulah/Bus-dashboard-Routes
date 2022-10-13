@@ -27,12 +27,6 @@ function OnlinePassengers() {
     true
   );
 
-  // useEffect(() => {
-  //     setFromLive(data?.description)
-  // }, [data])
-
-  // console.log("all", dataFromLive?.unshift(obj))
-  // Live fetching data
   useEffect(() => {
     const protocol = new signalR.JsonHubProtocol();
     const transport = signalR.HttpTransportType.WebSockets;
