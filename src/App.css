@@ -1,3 +1,4 @@
+/* customize map popup */
 .mapboxgl-popup-content {
   border-radius: 50% !important;
   background: hsla(0, 0%, 100%, 0.82) !important;
