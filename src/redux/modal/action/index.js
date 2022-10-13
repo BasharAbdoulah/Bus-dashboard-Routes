@@ -23,15 +23,6 @@ export const closeModal =
     dispatch({ type: constants.CLOSE_MODAL, payload: modalType });
   };
 
-export const panelPaymentValue = (value ,dispatch) => {
-    
-    dispatch({ type: constants.PANEL_PAYMENTS_VALUE, payload: value });
-  };
-
-
-  // export const panelPaymentValue = (value) => {
-  //   return {
-  //     type: constants.PANEL_PAYMENTS_VALUE,
-  //     paymentValue: value
-  //   }
-  // }
+export const SubscripionsType = (value, dispatch) => {
+  dispatch({ type: constants.SUBSCRIPIONS_TYPE, payload: value });
+};
