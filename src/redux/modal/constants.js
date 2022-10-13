@@ -1,7 +1,7 @@
 export const OPEN_MODAL = "OPEN_MODAL";
 export const CLOSE_MODAL = "CLOSE_MODAL";
 export const OPEN_EDIT_MODAL = "OPEN_EDIT_MODAL";
-export const SUBSCRIPIONS_TYPE = "SUBSCRIPIONS_TYPE";
+export const PANEL_PAYMENTS_VALUE = "PANEL_PAYMENTS_VALUE";
 
 // modalt types
 export const modalType_login = 1;
