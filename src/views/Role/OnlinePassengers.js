@@ -7,11 +7,6 @@ import * as signalR from "@microsoft/signalr";
 import axios from "axios";
 const audio = new Audio("/sounds/pristine-609.mp3");
 
-const obj = {
-  test1: "test1",
-  test2: "test2",
-};
-
 function OnlinePassengers() {
   const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState([]);
@@ -140,7 +135,7 @@ function OnlinePassengers() {
     <div>
       <h2 className="passengers-title on">Online Passengers</h2>
       <h4>
-        Number of passengers:{" "}
+        Number of passengers:
         <strong>{liveCount?.length ? liveCount?.length : 0}</strong>
       </h4>
 
