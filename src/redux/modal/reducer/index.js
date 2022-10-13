@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   successAction: null,
   mPayloads: null,
   editMode: false,
-  subscriptionType: "",
+  paymentValue: 0
 };
 export const modalReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -35,10 +35,10 @@ export const modalReducer = (state = INITIAL_STATE, action) => {
         mPayloads: null,
         editMode: false,
       };
-    case constants.SUBSCRIPIONS_TYPE:
+    case constants.PANEL_PAYMENTS_VALUE:
       return {
         ...state,
-        subscriptionType: action.payload,
+        paymentValue: action.payload
       };
     default:
       return state;
