@@ -7,11 +7,6 @@ import * as signalR from "@microsoft/signalr";
 import axios from "axios";
 const audio = new Audio("/sounds/pristine-609.mp3");
 
-const obj = {
-  test1: "test1",
-  test2: "test2",
-};
-
 function OnlinePassengers() {
   const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState([]);
@@ -32,12 +27,6 @@ function OnlinePassengers() {
     true
   );
 
-  // useEffect(() => {
-  //     setFromLive(data?.description)
-  // }, [data])
-
-  // console.log("all", dataFromLive?.unshift(obj))
-  // Live fetching data
   useEffect(() => {
     const protocol = new signalR.JsonHubProtocol();
     const transport = signalR.HttpTransportType.WebSockets;
@@ -132,121 +121,32 @@ function OnlinePassengers() {
       dataIndex: "time",
       key: "time",
     },
-    {
-      title: "date",
-      dataIndex: "date",
-      key: "date",
-      render: (data) => {
-        if (data)
-          return (
-            <React.Fragment key={data}>
-              {data.substring(0, 10)} {data.substring(11, 16)}{" "}
-            </React.Fragment>
-          );
-      },
-    },
   ];
+
+  console.log("data", data);
 
   return (
     <div>
       <h2 className="passengers-title on">Online Passengers</h2>
       <h4>
-        Number of passengers: <strong>{data?.total}</strong>
+        Number of passengers:
+        <strong>{liveCount?.length ? liveCount?.length : 0}</strong>
       </h4>
 
-      <div className="table">
-        <div className="table-thead">
-          <h3>Name</h3>
-          <h3>userName</h3>
-          <h3>Value</h3>
-          <h3>Time</h3>
-        </div>
-
-        <div className="table-tbody">
-          <div className="table-colomn">
-            {dataFromLive?.map((item) => {
-              return (
-                <>
-                  <p className="row-item">{item.name}</p>
-                </>
-              );
-            })}
-          </div>
-
-          <div className="table-colomn">
-            {dataFromLive?.map((item) => {
-              return (
-                <>
-                  <p className="row-item">{item.userName}</p>
-                </>
-              );
-            })}
-          </div>
-          <div className="table-colomn">
-            {dataFromLive?.map((item) => {
-              return (
-                <>
-                  <p className="row-item">
-                    {item?.value ? item?.value : "None"}
-                  </p>
-                </>
-              );
-            })}
-          </div>
-          <div className="table-colomn">
-            {dataFromLive?.map((item) => {
-              return (
-                <>
-                  <p className="row-item">{item.time}</p>
-                </>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* ##################################### */}
-
-        {loading && <Spin tip="Loading" />}
-        <div className="table-tbody">
-          <div className="table-colomn">
-            {data?.description.map((item) => {
-              return (
-                <>
-                  <p className="row-item">{item.name}</p>
-                </>
-              );
-            })}
-          </div>
-
-          <div className="table-colomn">
-            {data?.description.map((item) => {
-              return (
-                <>
-                  <p className="row-item">{item.userName}</p>
-                </>
-              );
-            })}
-          </div>
-          <div className="table-colomn">
-            {data?.description.map((item) => {
-              return (
-                <>
-                  <p className="row-item">{item.value}</p>
-                </>
-              );
-            })}
-          </div>
-          <div className="table-colomn">
-            {data?.description.map((item) => {
-              return (
-                <>
-                  <p className="row-item">{item.date}</p>
-                </>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+      <Table
+        columns={columns}
+        rowKey={"id"}
+        pagination={{
+          onChange: (page) => {
+            setCurrentPage(page);
+          },
+          total: liveCount?.length,
+          current: currentPage,
+        }}
+        dataSource={liveCount}
+        loading={loading}
+        size="small"
+      />
     </div>
   );
 }
