@@ -55,4 +55,12 @@
   cursor: pointer;
 }
 
+.total-title {
+  margin: 10px 0;
+  color: #393939;
+}
+.total-title strong {
+  color: #000;
+}
+
 /* customize map popup */

@@ -22,7 +22,7 @@ const Users = () => {
   const [tableData, setTableData] = useState([]);
   const history = useHistory();
   const search = history.location.search;
-  const states = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth);
   const [rerender, setrerender] = useState(false);
   // ?id=72c66ad3-b183-4e5f-8c7a-c8f4a77f816b&name=96597333839&phone=96597333839
   //98dfcfb2-dbdb-496c-907d-d79a776c8e50
@@ -30,46 +30,63 @@ const Users = () => {
     search.indexOf("=") + 1,
     search.indexOf("&")
   );
-  console.log(idFromPathName);
-  useEffect(() => {
-    console.log("state", states);
-    console.log("history", history.location.search);
-  }, [history.location.search]);
 
   const {
     data = [],
     error,
     loading,
     executeFetch,
-  } = useFetch("https://route.click68.com/api/ListUser", "post", {}, true);
+  } = useFetch("https://route.click68.com/api/WalletUser", "post", {}, true);
 
-  useEffect(() => {
-    if (data?.status === true && !loading) {
-      // {
-      //   page: ,
-      //   data:serersefsdfs [],
-      // }
-      let found = false;
-      for (let i = 0; i < tableData.length; i++) {
-        if (tableData[i].page === currentPage) {
-          found = true;
-          break;
+  useEffect(async () => {
+    await axios
+      .post(
+        "https://route.click68.com/api/WalletUser",
+        {
+          PageNumber: currentPage,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${user.token}`,
+          },
         }
-      }
+      )
+      .then((result) => {
+        console.log(result);
+        if (result?.data.status) {
+          setTableData(result.data.description.list);
+        }
+      });
+  }, []);
 
-      if (found === false) {
-        setTableData((prev) => {
-          let newData = prev;
-          newData.push({
-            page: currentPage,
-            data: data?.description,
-          });
-          return [...newData];
-        });
-      }
-    }
-  }, [data, error, loading]);
+  // useEffect(() => {
+  //   if (data?.status === true && !loading) {
+  //     // {
+  //     //   page: ,
+  //     //   data:serersefsdfs [],
+  //     // }
+  //     let found = false;
+  //     for (let i = 0; i < tableData.length; i++) {
+  //       if (tableData[i].page === currentPage) {
+  //         found = true;
+  //         break;
+  //       }
+  //     }
 
+  //     if (found === false) {
+  //       setTableData((prev) => {
+  //         let newData = prev;
+  //         newData.push({
+  //           page: currentPage,
+  //           data: data?.description,
+  //         });
+  //         return [...newData];
+  //       });
+  //     }
+  //   }
+  // }, [data, error, loading]);
+
+  // Active user functions
   const {
     data: disActiveData = {},
     error: disActiveError,
@@ -194,7 +211,7 @@ const Users = () => {
   const columns = [
     {
       title: "User Name",
-      dataIndex: "userName",
+      dataIndex: "name",
       key: "userName",
     },
     {
@@ -204,12 +221,12 @@ const Users = () => {
     },
     {
       title: "phone",
-      dataIndex: "phone",
+      dataIndex: "user",
       key: "phone",
     },
     {
       title: "Wallet",
-      dataIndex: "phone",
+      dataIndex: "total",
       key: "Wallet",
     },
 
@@ -257,12 +274,12 @@ const Users = () => {
 
   console.log(tableData);
 
-  useEffect(() => {
-    let isFound = tableData.find((d) => d.page === currentPage);
-    if (!isFound) executeFetch({ PageNumber: currentPage });
-  }, [currentPage]);
+  // useEffect(() => {
+  //   let isFound = tableData.find((d) => d.page === currentPage);
+  //   if (!isFound) executeFetch({ PageNumber: currentPage });
+  // }, [currentPage]);
 
-  let tab_data = tableData.find((i) => i.page === currentPage);
+  // let tab_data = tableData.find((i) => i.page === currentPage);
 
   return (
     <div>
@@ -273,12 +290,12 @@ const Users = () => {
           onChange: (page) => {
             setCurrentPage(page);
           },
-          total: data?.total,
+          total: tableData.length,
           current: currentPage,
         }}
-        dataSource={tab_data?.data}
+        dataSource={tableData}
         loading={loading}
-        error={error}
+        error={""}
         size="small"
       />
     </div>
