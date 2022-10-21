@@ -8,15 +8,50 @@ import useFetch from "hooks/useFetch";
 //redux
 import { openModal } from "redux/modal/action";
 import * as constants from "redux/modal/constants";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import axios from "axios";
 const Inspector = ({ openModal }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [allData, setAllData] = useState({ tableData: [], total: 0 });
+  const user = useSelector((state) => state.auth);
   //data table
+
   const {
     data = [],
     error,
     loading,
     executeFetch,
-  } = useFetch("https://route.click68.com/api/ListInspector", "post", {}, true);
+  } = useFetch(
+    "https://route.click68.com/api/WalletInspector",
+    "post",
+    {},
+    true
+  );
+
+  useEffect(async () => {
+    await axios
+      .post(
+        "https://route.click68.com/api/WalletInspector",
+        {
+          PageNumber: currentPage,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${user.token}`,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result);
+        if (result?.data.status) {
+          setAllData({
+            tableData: result.data.description.list,
+            total: result.data.description.sumTotal,
+          });
+        }
+      });
+  }, []);
+
   const Actions = ({ data }) => {
     const menu = (
       <Menu>
@@ -45,7 +80,7 @@ const Inspector = ({ openModal }) => {
   const columns = [
     {
       title: "Name",
-      dataIndex: "userName",
+      dataIndex: "name",
       key: "id",
     },
     {
@@ -55,12 +90,12 @@ const Inspector = ({ openModal }) => {
     },
     {
       title: "Wallet",
-      dataIndex: "email",
+      dataIndex: "total",
       key: "id",
     },
     {
       title: "Phone",
-      dataIndex: "phoneNumber",
+      dataIndex: "user",
       key: "id",
     },
     {
@@ -81,11 +116,21 @@ const Inspector = ({ openModal }) => {
       >
         Add Inpector
       </Button>
+      <h4 className="total-title">
+        Total Wallets: <strong>{allData?.total}</strong>
+      </h4>
       <Table
         columns={columns}
-        dataSource={data?.description}
+        dataSource={allData?.tableData}
         loading={loading}
         size="small"
+        pagination={{
+          onChange: (page) => {
+            setCurrentPage(page);
+          },
+          total: allData?.tableData.length,
+          current: currentPage,
+        }}
       />
     </div>
   );

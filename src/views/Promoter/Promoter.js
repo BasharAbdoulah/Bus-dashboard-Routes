@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // components
 import {
   Form,
@@ -17,24 +17,49 @@ import { DownOutlined } from "@ant-design/icons";
 // hooks
 import useFetch from "hooks/useFetch";
 //redux
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 //redux action
 import { openModal } from "redux/modal/action";
 import * as constants from "redux/modal/constants";
+import axios from "axios";
 
 const Promoter = ({ openModal }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [allData, setAllData] = useState({ tableData: [], total: 0 });
+  const user = useSelector((state) => state.auth);
   // for table data
   const {
     data = [],
     error,
     loading,
     executeFetch,
-  } = useFetch(
-    "https://route.click68.com/api/ListPromoter",
-    "post",
+  } = useFetch("https://route.click68.com/api/WalletPromoter", "post", true);
 
-    true
-  );
+  useEffect(async () => {
+    await axios
+      .post(
+        "https://route.click68.com/api/WalletPromoter",
+        {
+          PageNumber: currentPage,
+        },
+        {
+          headers: {
+            Authorization: `bearer ${user.token}`,
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result);
+        if (result?.data.status) {
+          setAllData({
+            tableData: result.data.description.list,
+            total: result.data.description.sumTotal,
+          });
+        }
+      });
+  }, []);
+
+  console.log(data);
 
   const Actions = ({ data }) => {
     const menu = (
@@ -69,7 +94,7 @@ const Promoter = ({ openModal }) => {
   const columns = [
     {
       title: "Name",
-      dataIndex: "userName",
+      dataIndex: "name",
       key: "id",
     },
     {
@@ -79,7 +104,7 @@ const Promoter = ({ openModal }) => {
     },
     {
       title: "Wallet",
-      dataIndex: "userName",
+      dataIndex: "total",
       key: "id",
     },
     {
@@ -106,11 +131,21 @@ const Promoter = ({ openModal }) => {
       >
         Add Promoter
       </Button>
+      <h4 className="total-title">
+        Total Wallets: <strong>{allData?.total}</strong>
+      </h4>
       <Table
         columns={columns}
-        dataSource={data?.description}
+        dataSource={allData?.tableData}
         loading={loading}
         size="small"
+        pagination={{
+          onChange: (page) => {
+            setCurrentPage(page);
+          },
+          total: allData?.tableData.length,
+          current: currentPage,
+        }}
       />
     </div>
   );
