@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 //component
-import { Row, Col, Input, Checkbox, Table, Form, Select, Alert } from "antd";
-
+import { Row, Col, Input, Checkbox, Form, Select, Alert } from "antd";
+import { Table } from "ant-table-extensions";
 import useFetch from "hooks/useFetch";
 const { Option } = Select;
 
@@ -219,6 +219,7 @@ const Paymentwallet = () => {
           }
           loading={loading || loadingByroute || userLoading}
           size="small"
+          exportable
         />
       </Form>
     </div>

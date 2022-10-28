@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 //component
-import { Form, Input, Table, Column } from "antd";
+import { Form, Input, Column } from "antd";
 import useFetch from "hooks/useFetch";
 
+import { Table } from "ant-table-extensions";
 const Trips = () => {
   const onSearch = (value) => console.log(value);
   const [currentPage, setCurrentPage] = useState(1);
@@ -90,6 +91,7 @@ const Trips = () => {
         loading={loading}
         error={error}
         size="small"
+        exportable
       />
     </div>
   );
