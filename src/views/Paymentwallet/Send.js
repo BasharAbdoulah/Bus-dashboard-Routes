@@ -5,13 +5,12 @@ import {
   Col,
   Input,
   Checkbox,
-  Table,
   Form,
   Select,
   Alert,
   Empty,
 } from "antd";
-
+import { Table } from "ant-table-extensions";
 import useFetch from "hooks/useFetch";
 import { SearchOutlined } from "@ant-design/icons";
 import axios, { Axios } from "axios";
@@ -125,6 +124,7 @@ const Send = () => {
             dataSource={paymentsList}
             loading={isLoading}
             size="small"
+            exportable
           />
         )}
       </Form>

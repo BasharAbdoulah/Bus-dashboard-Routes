@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
-//components
+import React, { useEffect, useState ,useRef } from "react";
+import { useDownloadExcel } from 'react-export-table-to-excel';
+import { CSVLink } from "react-csv";
+import { Table } from "ant-table-extensions";
 import {
   Form,
   Input,
   Modal,
   message,
   Space,
-  Table,
+ 
   Col,
   Row,
   Button,
@@ -40,6 +42,7 @@ const Bus = ({ token, openModal }) => {
     {},
     token
   );
+ 
   const {
     data: activedata = {},
     error: activeError,
@@ -104,6 +107,7 @@ const Bus = ({ token, openModal }) => {
     else if (setValue === "unActive") return unactiveexecuteFetch();
   };
 
+  
   //handle  delete item
   const handleDeleteItem = (id) => {
     Modal.confirm({
@@ -119,7 +123,7 @@ const Bus = ({ token, openModal }) => {
   const handleEditItem = (id) => {
     openModal(constants.modalType_AddBus, executeFetch, { id }, true);
   };
-
+ 
   const columns = [
     {
       title: "Company",
@@ -175,6 +179,7 @@ const Bus = ({ token, openModal }) => {
     <div>
       <Row>
         <Col>
+              
           <div>
             <Space>
               <Button
@@ -199,8 +204,9 @@ const Bus = ({ token, openModal }) => {
           </div>
         </Col>
       </Row>
-
-      <Table
+            
+     
+      <Table 
         columns={columns}
         dataSource={
           value === "Active"
@@ -211,6 +217,7 @@ const Bus = ({ token, openModal }) => {
         }
         loading={loading || activeLoading}
         size="small"
+        exportable
       />
     </div>
   );
