@@ -19,7 +19,7 @@ const Chargingwallet = () => {
   } = useFetch(
     "https://route.click68.com/api/ListChrgingWallet",
     "post",
-    {PageSize: 1000},
+    {},
     true
   );
   useEffect(() => {

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 //component
+import {CSVLink} from "react-csv"
+
 import { Form, Input, Column } from "antd";
 import useFetch from "hooks/useFetch";
 import * as FileSaver from "file-saver";
@@ -98,18 +100,24 @@ const Trips = () => {
   return (
     <div>
         <button onClick={(e) => exportToCSV(data1, fileName)}>Export</button>
-
+        <CSVLink
+              filename={"Expense_Table.csv"}
+              data={data1}
+              className="btn btn-primary"
+            >
+              Export to CSV
+            </CSVLink>
       <Table
         columns={columns}
         rowKey={"id"}
-        pagination={{
-          onChange: (page) => {
-            setCurrentPage(page);
-          },
-          total: data?.total,
-          current: currentPage,
-        }}
-        dataSource={tab_data?.data}
+        // pagination={{
+        //   onChange: (page) => {
+        //     setCurrentPage(page);
+        //   },
+        //   total: data?.total,
+        //   current: currentPage,
+        // }}
+        dataSource={data?.description}
         loading={loading}
         error={error}
         size="small"
