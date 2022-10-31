@@ -34,7 +34,7 @@ const Send = () => {
         {
           PageNumber: currentPage,
           id: user.id,
-          PageSize: 1000 
+     
         },
         {
           headers: {
