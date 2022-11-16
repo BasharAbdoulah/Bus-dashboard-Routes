@@ -192,6 +192,9 @@ const Users = () => {
             Chargings
           </Link>
         </Menu.Item>
+        <Menu.Item key="3">
+          <Link to={`/UserPackages?id=${data.userID}`}>Packages</Link>
+        </Menu.Item>
       </Menu>
     );
     return (

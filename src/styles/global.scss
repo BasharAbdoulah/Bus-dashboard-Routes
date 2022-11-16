@@ -1,0 +1,128 @@
+.table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .table-thead {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    background-color: #efefef;
+    padding: 10px;
+    h3 {
+      margin: 0;
+      padding: 0px 10px;
+      width: 25%;
+      font-size: 13px;
+      &:not(:first-child) {
+        border-left: 1px solid rgba(153, 153, 153, 0.768);
+      }
+    }
+  }
+  .table-tbody {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .table-colomn {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px 0;
+      width: 25%;
+
+      p {
+        margin: 0;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      p.space {
+        padding-top: 32px;
+      }
+    }
+  }
+}
+
+.add-backage-co {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    row-gap: 20px;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      width: 40%;
+      justify-content: flex-start;
+
+      &.edit {
+        width: 85%;
+      }
+      .switch {
+        width: 40px;
+        margin-top: 5px;
+      }
+      input {
+        border: 1px solid #bcbcbc;
+        border-radius: 3px;
+        padding: 3px;
+
+        &:focus {
+          border: 1px solid #1890ff;
+          outline: #1890ff;
+        }
+      }
+      input[type="checkbox"] {
+        width: 20px;
+        height: 14px;
+      }
+    }
+    .submit {
+      width: 100px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-weight: 600;
+      color: #fff;
+      background-color: #1890ff;
+      cursor: pointer;
+      padding: 2px 0;
+    }
+  }
+}
+
+.packages-table-co {
+  table {
+    width: 100%;
+
+    thead {
+      caption {
+        width: 200px;
+        margin-bottom: 8px;
+      }
+      tr {
+        padding: 8px;
+        background-color: #f4f4f4;
+        th {
+          padding: 6px 15px;
+          border-left: 1px solid #ddd;
+          text-align: left;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid #ddd;
+        td {
+          padding: 8px 15px;
+          a:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
