@@ -1,4 +1,4 @@
-import "../../styles/passengers.scss";
+import "../../styles/global.scss";
 import { Spin, Table } from "antd";
 import useFetch from "hooks/useFetch";
 import React, { useEffect, useState } from "react";
