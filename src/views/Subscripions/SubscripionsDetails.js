@@ -18,8 +18,7 @@ function SubscripionsDetails() {
     "https://route.click68.com/api/ListPackage",
     "post",
     {
-      PageNumber: 1,
-      PageSize: 11,
+      PageSize: 21,
     },
     true
   );
@@ -30,8 +29,6 @@ function SubscripionsDetails() {
     );
     setTableData(packages);
   }, [data, error, loading]);
-
-  console.log(data);
 
   useEffect(() => {
     if (true) executeFetch({ PageNumber: currentPage });

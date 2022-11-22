@@ -4,27 +4,28 @@ import querySring from "query-string";
 import useFetch from "hooks/useFetch";
 import axios from "axios";
 import { Table } from "antd";
+import { useSelector } from "react-redux";
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiY29tcEtHTCIsIlJvbGUiOiJDb21wYW55IiwiZXhwIjoxNjY4NDE3NTA0LCJpc3MiOiJJbnZlbnRvcnlBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkludmVudG9yeVNlcnZpY2VQb3RtYW5DbGllbnQifQ.x_6ZBlHWYBCIMvJDHKM0BDyegHV7ijkAppC4sLR5eqc";
-
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiY29tcEtHTCIsIlJvbGUiOiJDb21wYW55IiwiZXhwIjoxNjY4NTk3OTQ0LCJpc3MiOiJJbnZlbnRvcnlBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkludmVudG9yeVNlcnZpY2VQb3RtYW5DbGllbnQifQ.g--mk8XFDvHVxlsM8XW8xo0DhHH9yGqEbeLIhIfe5ak";
 function UserPackages() {
   const [response, setResponse] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const { id, name, phone } = querySring.parse(window.location.search);
+  const user = useSelector((state) => state.auth);
 
   // api/ListPackageByUserIdForCompany
   useEffect(async () => {
     setLoading(true);
     await axios
       .post(
-        `${process.env.REACT_APP_API_HOST}api/ListPackageByUserIdForCompany`,
+        `${process.env.REACT_APP_API_HOST}api/ListPackageByUserId`,
         {
           userId: id,
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       )
@@ -50,19 +51,14 @@ function UserPackages() {
       key: "activationExpiryDate",
     },
     {
-      title: "Expiration Date",
-      dataIndex: "expirationDate",
-      key: "expirationDate",
+      title: "Duration",
+      dataIndex: "duration",
+      key: "duration",
     },
     {
       title: "Package Kind",
       dataIndex: "packageKind",
       key: "packageKind",
-    },
-    {
-      title: "The date of purchase",
-      dataIndex: "thedateofpurchase",
-      key: "thedateofpurchase",
     },
     {
       title: "Using Number",

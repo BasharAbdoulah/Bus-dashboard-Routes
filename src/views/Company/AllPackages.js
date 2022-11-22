@@ -26,9 +26,8 @@ function AllPackages() {
     "https://route.click68.com/api/ListPackageByCompanyID",
     "post",
     {
+      PageNumber: currentPage,
       id: user?.companyID,
-      PageNumber: 1,
-      PageSize: 10,
     },
     true
   );
@@ -43,9 +42,7 @@ function AllPackages() {
 
   // Handle edit function
   const handleEdit = (item) => {
-    console.log("id is", item.id);
     setModal2Open(true);
-    console.log(item);
     setCompanyName(item.companyName);
     setDescription(item.desc);
     setKind(item.kind);
@@ -57,8 +54,6 @@ function AllPackages() {
   // handle ok action
   const onOk = async (e) => {
     e.preventDefault();
-    console.log(name, description, kind, price);
-
     await axios
       .post(
         `${process.env.REACT_APP_API_HOST}api/EditPackage`,
@@ -76,9 +71,8 @@ function AllPackages() {
         }
       )
       .then((res) => {
-        console.log("res", res.data);
         if (res.data.status) {
-          message.success("The package has edited");
+          message.success("The package has been edited");
           executeFetch();
           setModal2Open(false);
         }
@@ -192,6 +186,18 @@ function AllPackages() {
             })}
           </tbody>
         </table>
+        <Table
+          // columns={columns}
+          rowKey={"id"}
+          pagination={{
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
+            total: tableData?.length,
+            current: currentPage,
+          }}
+          size="small"
+        />
         {loading && (
           <Spin style={{ width: "100%", margin: "20px" }} tip="Loading..." />
         )}
