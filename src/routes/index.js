@@ -43,11 +43,15 @@ import OfflinePassengers from "views/Role/OfflinePassengers";
 import OnlinePassengers from "views/Role/OnlinePassengers";
 import Send from "views/Paymentwallet/Send";
 import DeletedUsers from "views/Role/DeletedUsers";
-import Subscripions from "views/Subscripions/Subscripions";
 import SubscripionsDetails from "views/Subscripions/SubscripionsDetails";
 import UserPackages from "views/Role/UserPackages";
 import AddPackage from "Component/Modals/Company/AddPackage";
 import AllPackages from "views/Company/AllPackages";
+import CompanyUsers from "views/Company/CompanyUsers";
+import Companies from "views/Subscripions/Companies";
+import SubscriptionsKinds from "views/Subscripions/SubscriptionsKinds";
+import SubscriptionsByKind from "views/Subscripions/SubscriptionsByKind";
+import AllSubscriptions from "views/Subscripions/AllSubscriptions";
 
 const Router = () => {
   return (
@@ -67,6 +71,7 @@ const Router = () => {
       <MainRoutes exact path="/BusCompany" component={BusCompany} />
       <MainRoutes exact path="/AddPackage" component={AddPackage} />
       <MainRoutes exact path="/AllPackages" component={AllPackages} />
+      <MainRoutes exact path="/CompanyUsers" component={CompanyUsers} />
       <MainRoutes exact path="/Driver" component={Driver} />
       <MainRoutes
         exact
@@ -75,12 +80,25 @@ const Router = () => {
       />
       <MainRoutes exact path="/OnlinePassengers" component={OnlinePassengers} />
       <MainRoutes exact path="/DeletedUsers" component={DeletedUsers} />
-      <MainRoutes exact path="/Subscripions" component={Subscripions} />
+      <MainRoutes exact path="/Companies" component={Companies} />
       <MainRoutes
         exact
-        path="/Subscripions/SubscripionsDetails"
+        path="/SubscriptionsKinds"
+        component={SubscriptionsKinds}
+      />
+
+      <MainRoutes
+        exact
+        path="/SubscriptionsByKind"
+        component={SubscriptionsByKind}
+      />
+      <MainRoutes
+        exact
+        path="/Companies/SubscripionsDetails"
         component={SubscripionsDetails}
       />
+      <MainRoutes exact path="/AllSubscriptions" component={AllSubscriptions} />
+
       <MainRoutes exact path="/Chargingwallet" component={Chargingwallet} />
       <MainRoutes exact path="/Payments" component={Payments} />
       <MainRoutes exact path="/Send" component={Send} />

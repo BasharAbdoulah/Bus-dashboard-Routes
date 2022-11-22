@@ -61,7 +61,7 @@ function AddPackage() {
         </div>
         <div className="form-group">
           <label htmlFor="price">Price:</label>
-          <input required type={"number"} id="price" />
+          <input required type={"text"} id="price" />
         </div>
         <div className="form-group">
           <label htmlFor="active">Is active?</label>

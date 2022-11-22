@@ -40,8 +40,7 @@ const Company = ({ token, openModal }) => {
     {},
     token
   );
-  console.log("data", token);
-  console.log(data);
+
   const {
     data: deleteData = {},
     error: deleteError,

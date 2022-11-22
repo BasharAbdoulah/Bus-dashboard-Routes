@@ -140,6 +140,9 @@ const DashboardLayout = ({
                   <Link to={"/AllPackages"}>All Packages</Link>
                 </Menu.Item>
               </Menu.SubMenu>
+              <Menu.Item key="18">
+                <Link to="/CompanyUsers">Company Users</Link>
+              </Menu.Item>
               {/* <Menu.Item key="18">
                 <Link to="/PaymentOfCompany">Payment Of Company </Link>
               </Menu.Item> */}
@@ -233,7 +236,13 @@ const DashboardLayout = ({
               </Menu.Item>
               <Menu.SubMenu key="sub12" title="Subscripions">
                 <Menu.Item key="116">
-                  <Link to="/Subscripions">All Subscripions</Link>
+                  <Link to="/SubscriptionsKinds">Subscripions Kinds</Link>
+                </Menu.Item>
+                <Menu.Item key="1160">
+                  <Link to="/Companies">Companies</Link>
+                </Menu.Item>
+                <Menu.Item key="1161">
+                  <Link to="/AllSubscriptions">All Subscriptions</Link>
                 </Menu.Item>
               </Menu.SubMenu>
 

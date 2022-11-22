@@ -8,47 +8,8 @@ import { SUBSCRIPIONS_TYPE } from "redux/modal/constants";
 
 const d = new Date();
 const currentDate = d.toDateString();
-// const data = [
-//   {
-//     id: "1",
-//     name: "3 Month Pass",
-//     "duration/days": 90,
-//     expiryDate: currentDate,
-//     routes: "all",
-//     price: 30.0,
-//     company: "KPTC",
-//   },
-//   {
-//     id: "2",
-//     name: "Monthly Pass",
-//     "duration/days": 30,
-//     expiryDate: currentDate,
-//     routes: "all",
-//     price: 12.5,
-//     company: "KPTC",
-//   },
-//   {
-//     id: "3",
-//     name: "Weekly Pass",
-//     "duration/days": 7,
-//     expiryDate: currentDate,
-//     routes: "all",
-//     price: 5.0,
-//     company: "KPTC",
-//   },
-//   {
-//     id: "4",
-//     name: "Daily Pass",
-//     "duration/days": 1,
-//     expiryDate: currentDate,
-//     routes: "all",
-//     price: 0.75,
-//     company: "KPTC",
-//     isActive: false,
-//   },
-// ];
 
-function Subscripions() {
+function Companies() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth);
 
@@ -74,7 +35,7 @@ function Subscripions() {
           return (
             <Link
               key={item.id}
-              to="/Subscripions/SubscripionsDetails"
+              to="/Companies/SubscripionsDetails"
               className="package"
               onClick={() => SubscripionsType(item.id, dispatch)}
             >
@@ -89,4 +50,4 @@ function Subscripions() {
   );
 }
 
-export default Subscripions;
+export default Companies;
