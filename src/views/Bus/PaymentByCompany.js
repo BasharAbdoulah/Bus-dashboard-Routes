@@ -251,7 +251,7 @@ const ListPaymentByCompany = ({ token }) => {
         columns={columns}
         dataSource={paymentLiveBus}
         loading={loading}
-        size="small"
+        size="middle"
         rowKey={"id"}
       />
     </div>

@@ -114,8 +114,7 @@ const Send = () => {
             }}
             dataSource={paymentsList}
             loading={isLoading}
-            size="small"
-            exportable
+            size="middle"
           />
         )}
       </Form>

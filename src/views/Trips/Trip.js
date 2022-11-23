@@ -120,8 +120,7 @@ const Trips = () => {
         dataSource={data?.description}
         loading={loading}
         error={error}
-        size="small"
-        exportable
+        size="middle"
       />
     </div>
   );

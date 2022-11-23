@@ -26,7 +26,7 @@ function Companies() {
     {},
     user?.token
   );
-  console.log(data2);
+
   return (
     <div className="packages-container">
       <h2>Companies Subscripions</h2>

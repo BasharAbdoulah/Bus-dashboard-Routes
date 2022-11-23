@@ -303,6 +303,7 @@ const RouteStation = ({ openModal }) => {
         }}
         dataSource={tab_data?.data}
         loading={loading}
+        size={"middle"}
       />
     </div>
   );

@@ -232,8 +232,7 @@ const Bus = ({ token, openModal }) => {
             : data?.description
         }
         loading={loading || activeLoading}
-        size="small"
-        exportable
+        size="middle"
       />
     </div>
   );

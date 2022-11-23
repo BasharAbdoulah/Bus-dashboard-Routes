@@ -104,7 +104,7 @@ function SubscripionsByKind() {
         dataSource={tableData}
         loading={loading}
         error={error}
-        size="small"
+        size="middle"
       />
     </div>
   );
