@@ -337,7 +337,7 @@ const PaymentCompany = ({ token, role, companyID }) => {
         columns={columns}
         dataSource={paymentLiveBus}
         loading={loading}
-        size="small"
+        size="middle"
         rowKey={"id"}
       />
     </div>

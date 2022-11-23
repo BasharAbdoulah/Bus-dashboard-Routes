@@ -76,10 +76,43 @@ function SubscripionsDetails() {
       },
     },
   ];
+  const dataSource = [
+    {
+      key: "1",
+      name: "Mike",
+      age: 32,
+      address: "10 Downing Street",
+    },
+    {
+      key: "2",
+      name: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+  ];
+
+  const columns2 = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+  ];
+
   return (
     <div>
       <Table
-        columns={columns}
+        columns={columns2}
         rowKey={"id"}
         pagination={{
           onChange: (page) => {
@@ -88,10 +121,10 @@ function SubscripionsDetails() {
           total: tableData?.length,
           current: currentPage,
         }}
-        dataSource={tableData}
+        dataSource={dataSource}
         loading={loading}
         error={error}
-        size="small"
+        size={"middle"}
       />
     </div>
   );

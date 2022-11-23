@@ -140,35 +140,6 @@ const Chargingwallet = () => {
     <div>
       <Form form={form} layout="vertical">
         <Row gutter={24}>
-          {/* <Col span={8}>
-            <Form.Item name="RouteID" label="select route">
-              <Select
-                showSearch
-                placeholder="Select a route"
-                optionFilterProp="children"
-                allowClear
-                // onChange={onChange}
-                onFocus={() => {
-                  if (routedata?.description?.length > 0) return false;
-                  routeexecuteFetch();
-                }}
-                onSearch={onSearch}
-                filterOption={(input, option) =>
-                  option.children
-                    .toLowerCase()
-                    .indexOf(input.toLocaleLowerCase()) > 0
-                }
-                onChange={(value) => {
-                  executeFetchByroute({ id: value });
-                }}
-              >
-                {routedata?.description.map((item) => {
-                  // if (item.id === getData?.description?.routeId )
-                  return <Option value={item.id}>{item.name}</Option>;
-                })}
-              </Select>
-            </Form.Item>
-          </Col> */}
           <Col span={8}>
             <Form.Item name="UserID" label="select User">
               <Select

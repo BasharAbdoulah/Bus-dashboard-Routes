@@ -60,7 +60,7 @@ const InspectorBus = () => {
         rowKey={"id"}
         dataSource={data?.description}
         loading={loading}
-        size="small"
+        size="middle"
       />
     </div>
   );

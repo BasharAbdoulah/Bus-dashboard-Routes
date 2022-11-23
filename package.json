@@ -11,7 +11,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "ant-table-extensions": "^1.1.7",
+    "ant-table": "^1.0.1",
     "antd": "^4.19.5",
     "antd-table-saveas-excel": "^2.2.1",
     "axios": "^0.23.0",

@@ -89,7 +89,7 @@ const RouteForStation = () => {
         columns={columns}
         dataSource={data?.description}
         loading={loading}
-        size="small"
+        size="middle"
       />
     </div>
   );

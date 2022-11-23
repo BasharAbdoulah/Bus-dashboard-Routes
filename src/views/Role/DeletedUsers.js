@@ -115,7 +115,7 @@ const DeletedUsers = () => {
           }}
           dataSource={tableData}
           loading={loading}
-          size="small"
+          size="middle"
         />
       )}
     </div>

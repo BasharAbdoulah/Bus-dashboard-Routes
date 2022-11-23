@@ -145,7 +145,7 @@ function OnlinePassengers() {
         }}
         dataSource={liveCount}
         loading={loading}
-        size="small"
+        size="middle"
       />
     </div>
   );

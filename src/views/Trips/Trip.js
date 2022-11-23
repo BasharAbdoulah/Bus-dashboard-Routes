@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 //component
-import {CSVLink} from "react-csv"
+import { CSVLink } from "react-csv";
 
 import { Form, Input, Column } from "antd";
 import useFetch from "hooks/useFetch";
@@ -14,18 +14,18 @@ const Trips = () => {
   const [data1, setData1] = useState([]);
   const fileName = "myfile"; // here enter filename for your excel file
 
-
   const {
     data = [],
     error,
     loading,
     executeFetch,
-  } = useFetch("https://route.click68.com/api/ListTrip", "post",{PageSize: 1000 } );
+  } = useFetch("https://route.click68.com/api/ListTrip", "post", {
+    PageSize: 1000,
+  });
 
   useEffect(() => {
     if (data?.status === true && !loading) {
       setData1(data?.description);
-     
     }
   }, [data, error, loading]);
   useEffect(() => {
@@ -99,14 +99,14 @@ const Trips = () => {
   };
   return (
     <div>
-        <button onClick={(e) => exportToCSV(data1, fileName)}>Export</button>
-        <CSVLink
-              filename={"Expense_Table.csv"}
-              data={data1}
-              className="btn btn-primary"
-            >
-              Export to CSV
-            </CSVLink>
+      <button onClick={(e) => exportToCSV(data1, fileName)}>Export</button>
+      <CSVLink
+        filename={"Expense_Table.csv"}
+        data={data1}
+        className="btn btn-primary"
+      >
+        Export to CSV
+      </CSVLink>
       <Table
         columns={columns}
         rowKey={"id"}
@@ -120,8 +120,7 @@ const Trips = () => {
         dataSource={data?.description}
         loading={loading}
         error={error}
-        size="small"
-        exportable
+        size="middle"
       />
     </div>
   );
