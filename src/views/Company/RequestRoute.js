@@ -247,7 +247,7 @@ const RequestRoute = ({ token, openModal }) => {
         rowSelection={{ ...rowSelection }}
         dataSource={tab_data?.data}
         loading={loading}
-        size="small"
+        size="middle"
       />
     </div>
   );

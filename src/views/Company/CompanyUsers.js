@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Empty, Table } from "antd";
 import useFetch from "hooks/useFetch";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -46,22 +46,25 @@ function CompanyUsers() {
   ];
   return (
     <div>
-      {" "}
-      <Table
-        columns={columns}
-        rowKey={"id"}
-        pagination={{
-          onChange: (page) => {
-            setCurrentPage(page);
-          },
-          total: tableData?.length,
-          current: currentPage,
-        }}
-        dataSource={tableData}
-        loading={loading}
-        error={error}
-        size="small"
-      />
+      {tableData?.length == 0 ? (
+        <Empty />
+      ) : (
+        <Table
+          columns={columns}
+          rowKey={"id"}
+          pagination={{
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
+            total: tableData?.length,
+            current: currentPage,
+          }}
+          dataSource={tableData}
+          loading={loading}
+          error={error}
+          size="small"
+        />
+      )}
     </div>
   );
 }

@@ -83,7 +83,7 @@ function UserPackages() {
         dataSource={response?.description}
         loading={loading}
         error={""}
-        size="small"
+        size="middle"
       />
     </>
   );

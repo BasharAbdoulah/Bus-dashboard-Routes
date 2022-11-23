@@ -196,7 +196,7 @@ function AllPackages() {
             total: tableData?.length,
             current: currentPage,
           }}
-          size="small"
+          size="middle"
         />
         {loading && (
           <Spin style={{ width: "100%", margin: "20px" }} tip="Loading..." />

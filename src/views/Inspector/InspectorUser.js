@@ -50,7 +50,7 @@ const InspectorUser = () => {
         rowKey={"id"}
         dataSource={data?.description}
         loading={loading}
-        size="small"
+        size="middle"
       />
     </div>
   );

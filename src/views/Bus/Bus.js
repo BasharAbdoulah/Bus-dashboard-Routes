@@ -210,7 +210,7 @@ const Bus = ({ token, openModal }) => {
             : data?.description
         }
         loading={loading || activeLoading}
-        size="small"
+        size="middle"
       />
     </div>
   );

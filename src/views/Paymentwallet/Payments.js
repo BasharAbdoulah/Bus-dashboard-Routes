@@ -218,7 +218,7 @@ const Paymentwallet = () => {
               : tab_data?.data
           }
           loading={loading || loadingByroute || userLoading}
-          size="small"
+          size="middle"
         />
       </Form>
     </div>

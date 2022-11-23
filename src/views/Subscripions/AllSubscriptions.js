@@ -26,6 +26,7 @@ function AllSubscriptions() {
     setTableData(data?.description);
   }, [data, error, loading]);
 
+  console.log(data);
   const columns = [
     {
       title: "Activation Date",
@@ -74,7 +75,7 @@ function AllSubscriptions() {
         dataSource={tableData}
         loading={loading}
         error={error}
-        size="small"
+        size={"middle"}
       />
     </div>
   );

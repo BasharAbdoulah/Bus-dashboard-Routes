@@ -62,7 +62,6 @@ const DashboardLayout = ({
   const isHomePage =
     location.pathname === "/Dash" ? true : location.pathname === "/Dash/";
 
-  console.log(location.pathname.split("/"));
   const toggle = () => {
     if (isOpen) closeSider();
     else openSider();

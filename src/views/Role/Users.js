@@ -299,7 +299,7 @@ const Users = () => {
         dataSource={tableData}
         loading={loading}
         error={""}
-        size="small"
+        size="middle"
       />
     </div>
   );

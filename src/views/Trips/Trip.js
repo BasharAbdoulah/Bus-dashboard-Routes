@@ -89,7 +89,7 @@ const Trips = () => {
         dataSource={tab_data?.data}
         loading={loading}
         error={error}
-        size="small"
+        size="middle"
       />
     </div>
   );

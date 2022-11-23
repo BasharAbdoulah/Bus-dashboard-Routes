@@ -182,7 +182,7 @@ const Station = ({ openModal }) => {
         dataSource={tab_data?.data}
         loading={loading}
         error={error}
-        size="small"
+        size="middle"
       />
     </div>
   );

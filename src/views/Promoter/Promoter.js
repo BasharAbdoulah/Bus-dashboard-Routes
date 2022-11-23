@@ -138,7 +138,7 @@ const Promoter = ({ openModal }) => {
         columns={columns}
         dataSource={allData?.tableData}
         loading={loading}
-        size="small"
+        size="middle"
         pagination={{
           onChange: (page) => {
             setCurrentPage(page);

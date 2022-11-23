@@ -256,7 +256,7 @@ const BusByCompany = ({ token, openModal }) => {
             : tab_data?.data
         }
         loading={loading || activeLoading}
-        size="small"
+        size="middle"
       />
     </div>
   );
