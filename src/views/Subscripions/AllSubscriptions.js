@@ -22,6 +22,7 @@ function AllSubscriptions() {
     true
   );
 
+  // seting the data
   useEffect(() => {
     setTableData(data?.description);
   }, [data, error, loading]);
