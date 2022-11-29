@@ -16,11 +16,13 @@ function AllSubscriptions() {
   } = useFetch(
     "https://route.click68.com/api/ListPackageForAllKindSubscriber",
     "post",
-    {
-      PageNumber: currentPage,
-    },
     true
   );
+
+  useEffect(() => {
+    // let isFound = tableData.find((d) => d.page === currentPage);
+    if (true) executeFetch({ PageNumber: currentPage });
+  }, [currentPage]);
 
   // seting the data
   useEffect(() => {

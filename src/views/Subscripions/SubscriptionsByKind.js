@@ -37,15 +37,7 @@ function SubscripionsByKind() {
     error,
     loading,
     executeFetch,
-  } = useFetch(
-    `https://route.click68.com/api/${endpoint}`,
-    "post",
-    {
-      PageNumber: 1,
-      PageSize: 11,
-    },
-    true
-  );
+  } = useFetch(`https://route.click68.com/api/${endpoint}`, "post", {}, true);
 
   useEffect(async () => {
     setTableData(data?.description);

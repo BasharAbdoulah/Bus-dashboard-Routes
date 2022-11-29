@@ -34,8 +34,6 @@ function SubscripionsDetails() {
     if (true) executeFetch({ PageNumber: currentPage });
   }, [currentPage]);
 
-  const user = useSelector((state) => state.auth);
-
   const columns = [
     {
       title: "Company name",
@@ -76,43 +74,11 @@ function SubscripionsDetails() {
       },
     },
   ];
-  const dataSource = [
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
-
-  const columns2 = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-    },
-  ];
 
   return (
     <div>
       <Table
-        columns={columns2}
+        columns={columns}
         rowKey={"id"}
         pagination={{
           onChange: (page) => {
@@ -121,7 +87,7 @@ function SubscripionsDetails() {
           total: tableData?.length,
           current: currentPage,
         }}
-        dataSource={dataSource}
+        dataSource={tableData}
         loading={loading}
         error={error}
         size={"middle"}

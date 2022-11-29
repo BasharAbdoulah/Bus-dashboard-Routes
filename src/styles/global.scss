@@ -126,7 +126,23 @@
     }
   }
 }
-
+.pagination-container {
+  margin: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
 .ant-table.ant-table-small {
   display: none;
+}
+
+.user-search {
+  margin-bottom: 10px;
+  .s-container {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    input {
+      width: 200px;
+    }
+  }
 }

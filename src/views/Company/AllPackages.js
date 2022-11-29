@@ -1,4 +1,4 @@
-import { message, Modal, Spin, Switch, Table } from "antd";
+import { message, Modal, Pagination, Spin, Switch, Table } from "antd";
 import axios from "axios";
 import useFetch from "hooks/useFetch";
 import React, { useEffect, useState } from "react";
@@ -35,7 +35,7 @@ function AllPackages() {
   useEffect(async () => {
     setTableData(data?.description);
   }, [data, error, loading]);
-
+  console.log(data);
   useEffect(() => {
     if (true) executeFetch({ PageNumber: currentPage });
   }, [currentPage]);
@@ -81,6 +81,17 @@ function AllPackages() {
         console.error(err);
         message.error("Sorry, something went wrong!");
       });
+  };
+
+  const itemRender = (_, type, originalElement) => {
+    // console.log(_, type, originalElement);
+    if (type === "prev") {
+      return <a>Previous</a>;
+    }
+    if (type === "next") {
+      return <a>Next</a>;
+    }
+    return originalElement;
   };
 
   return (
@@ -186,18 +197,13 @@ function AllPackages() {
             })}
           </tbody>
         </table>
-        <Table
-          // columns={columns}
-          rowKey={"id"}
-          pagination={{
-            onChange: (page) => {
-              setCurrentPage(page);
-            },
-            total: tableData?.length,
-            current: currentPage,
-          }}
-          size="middle"
-        />
+        <div className="pagination-container">
+          <Pagination
+            size={"small"}
+            onChange={(e) => setCurrentPage(e)}
+            total={tableData?.length}
+          />
+        </div>
         {loading && (
           <Spin style={{ width: "100%", margin: "20px" }} tip="Loading..." />
         )}
