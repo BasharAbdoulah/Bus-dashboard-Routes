@@ -55,7 +55,6 @@
     .form-group {
       display: flex;
       flex-direction: column;
-      width: 40%;
       justify-content: flex-start;
 
       &.edit {
@@ -94,6 +93,24 @@
 }
 
 .packages-table-co {
+  .add-package-head {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    p {
+      margin: 0;
+    }
+    button {
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      background-color: #1890ff;
+      cursor: pointer;
+      padding: 6px;
+    }
+  }
   table {
     width: 100%;
 

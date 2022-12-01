@@ -1,19 +1,21 @@
+import { PlusCircleFilled } from "@ant-design/icons";
 import { message, Modal, Pagination, Spin, Switch, Table } from "antd";
 import axios from "axios";
+import AddPackage from "Component/Modals/Company/AddPackage";
 import useFetch from "hooks/useFetch";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 function AllPackages() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(2);
   const [tableData, setTableData] = useState([]);
   const user = useSelector((state) => state.auth);
   const [modal2Open, setModal2Open] = useState(false);
-  const [isSwitch, setIsSwitch] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState();
-  const [kind, setKind] = useState();
+  const [addModalIs, setAddModalIs] = useState(false);
+  const [price, setPrice] = useState(0);
+  const [kind, setKind] = useState(0);
   const [name, setName] = useState();
   const [deletedId, setDeletedId] = useState();
 
@@ -26,19 +28,15 @@ function AllPackages() {
     "https://route.click68.com/api/ListPackageByCompanyID",
     "post",
     {
-      PageNumber: currentPage,
       id: user?.companyID,
     },
     true
   );
 
-  useEffect(async () => {
-    setTableData(data?.description);
-  }, [data, error, loading]);
   console.log(data);
   useEffect(() => {
     if (true) executeFetch({ PageNumber: currentPage });
-  }, [currentPage]);
+  }, []);
 
   // Handle edit function
   const handleEdit = (item) => {
@@ -53,6 +51,7 @@ function AllPackages() {
 
   // handle ok action
   const onOk = async (e) => {
+    console.log(name, description, price, kind);
     e.preventDefault();
     await axios
       .post(
@@ -62,7 +61,7 @@ function AllPackages() {
           Name: name,
           Desc: description,
           Price: price,
-          Kind: kind,
+          Kind: parseInt(kind),
         },
         {
           headers: {
@@ -82,20 +81,27 @@ function AllPackages() {
         message.error("Sorry, something went wrong!");
       });
   };
+  const compName = data?.description[0].companyName;
 
-  const itemRender = (_, type, originalElement) => {
-    // console.log(_, type, originalElement);
-    if (type === "prev") {
-      return <a>Previous</a>;
-    }
-    if (type === "next") {
-      return <a>Next</a>;
-    }
-    return originalElement;
-  };
+  const onAddOk = () => {};
 
   return (
     <>
+      {/* Add modal */}
+      <Modal
+        title="Edit your package"
+        centered
+        visible={addModalIs}
+        onOk={onAddOk}
+        okText="Submit"
+        onCancel={() => setAddModalIs(false)}
+        footer={null}
+      >
+        <AddPackage />
+      </Modal>
+      {/* End add modal */}
+
+      {/* Edit modal */}
       <Modal
         title="Edit your package"
         centered
@@ -144,18 +150,18 @@ function AllPackages() {
                 required
                 value={kind}
                 onChange={(e) => setKind(e.target.value)}
-                type={"text"}
+                type={"number"}
                 id="kind"
               />
             </div>
             <div className="form-group">
-              <label htmlFor="kind">Name:</label>
+              <label htmlFor="name">Name:</label>
               <input
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 type={"text"}
-                id="kind"
+                id="name"
               />
             </div>
             <input type="submit" className="submit" />
@@ -163,24 +169,27 @@ function AllPackages() {
         </div>
       </Modal>
       <div className="packages-table-co">
-        <p>Company Packages</p>
+        <div className="add-package-head">
+          <p>{compName ? compName : "No"} Packages</p>
+          <button onClick={() => setAddModalIs(true)}>
+            <PlusCircleFilled /> Add Package
+          </button>
+        </div>
         <table>
           <thead>
             <tr>
-              <th>Company name</th>
               <th>Description</th>
               <th>Kind number</th>
-              <th>Kind </th>
+              <th>Name </th>
               <th>Price</th>
               <th>Create date</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {tableData?.map((item) => {
+            {data?.description.map((item) => {
               return (
                 <tr key={item.id}>
-                  <td>{item.companyName}</td>
                   <td>{item.desc}</td>
                   <td>{item.kind}</td>
                   <td>{item.name}</td>

@@ -45,7 +45,6 @@ import Send from "views/Paymentwallet/Send";
 import DeletedUsers from "views/Role/DeletedUsers";
 import SubscripionsDetails from "views/Subscripions/SubscripionsDetails";
 import UserPackages from "views/Role/UserPackages";
-import AddPackage from "Component/Modals/Company/AddPackage";
 import AllPackages from "views/Company/AllPackages";
 import CompanyUsers from "views/Company/CompanyUsers";
 import Companies from "views/Subscripions/Companies";
@@ -69,7 +68,6 @@ const Router = () => {
       <MainRoutes exact path="/MultiMap" component={MultiMap} />
       <MainRoutes exact path="/Bus" component={Bus} />
       <MainRoutes exact path="/BusCompany" component={BusCompany} />
-      <MainRoutes exact path="/AddPackage" component={AddPackage} />
       <MainRoutes exact path="/AllPackages" component={AllPackages} />
       <MainRoutes exact path="/CompanyUsers" component={CompanyUsers} />
       <MainRoutes exact path="/Driver" component={Driver} />
