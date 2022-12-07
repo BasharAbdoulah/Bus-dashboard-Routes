@@ -69,7 +69,7 @@ function UserPackages() {
 
   return (
     <>
-      <h4>{response?.name} packages : </h4>
+      <h4>{response?.name ? response?.name : "No"} packages : </h4>
       <Table
         columns={columns}
         rowKey={"id"}

@@ -46,25 +46,21 @@ function CompanyUsers() {
   ];
   return (
     <div>
-      {tableData?.length == 0 ? (
-        <Empty />
-      ) : (
-        <Table
-          columns={columns}
-          rowKey={"id"}
-          pagination={{
-            onChange: (page) => {
-              setCurrentPage(page);
-            },
-            total: tableData?.length,
-            current: currentPage,
-          }}
-          dataSource={tableData}
-          loading={loading}
-          error={error}
-          size="small"
-        />
-      )}
+      <Table
+        columns={columns}
+        rowKey={"id"}
+        pagination={{
+          onChange: (page) => {
+            setCurrentPage(page);
+          },
+          total: tableData?.length,
+          current: currentPage,
+        }}
+        dataSource={tableData}
+        loading={loading}
+        error={error}
+        size={"middle"}
+      />
     </div>
   );
 }

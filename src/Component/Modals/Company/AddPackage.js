@@ -12,11 +12,11 @@ function AddPackage() {
   const handleAdd = async (e) => {
     e.preventDefault();
     console.log(
-      e.target.active,
+      isSwitch,
       e.target.name.value,
       e.target.description.value,
-      parseInt(e.target.price.value),
-      parseInt(e.target.kind.value)
+      e.target.price.value,
+      e.target.kind.value
     );
     await axios
       .post(
@@ -24,7 +24,7 @@ function AddPackage() {
         {
           Name: e.target.name.value,
           Desc: e.target.description.value,
-          Price: parseInt(e.target.price.value),
+          Price: e.target.price.value,
           Active: isSwitch,
           Kind: parseInt(e.target.kind.value),
         },
@@ -35,6 +35,7 @@ function AddPackage() {
         }
       )
       .then((res) => {
+        console.log(res);
         e.target.name.value = "";
         e.target.description.value = "";
         e.target.kind.value = "";
@@ -74,8 +75,8 @@ function AddPackage() {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="kind">Kind:</label>
-          <input required type={"text"} id="kind" />
+          <label htmlFor="kind">Kind Number:</label>
+          <input required type={"number"} id="kind" />
         </div>
         <input className="submit" type={"submit"} />
       </form>

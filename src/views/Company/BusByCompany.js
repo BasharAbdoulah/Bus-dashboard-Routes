@@ -211,7 +211,7 @@ const BusByCompany = ({ token, openModal }) => {
 
   return (
     <div>
-      <Row>
+      <Row style={{ margin: "20px 0" }}>
         <Col>
           <div>
             <Space>

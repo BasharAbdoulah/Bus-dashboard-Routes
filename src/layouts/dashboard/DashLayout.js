@@ -131,14 +131,9 @@ const DashboardLayout = ({
                   Request For Route
                 </span>
               </Menu.Item>
-              <Menu.SubMenu key="sub00" title="Packages">
-                <Menu.Item>
-                  <Link to={"/AddPackage"}>Add Package</Link>
-                </Menu.Item>
-                <Menu.Item>
-                  <Link to={"/AllPackages"}>All Packages</Link>
-                </Menu.Item>
-              </Menu.SubMenu>
+              <Menu.Item>
+                <Link to={"/AllPackages"}>All Packages</Link>
+              </Menu.Item>
               <Menu.Item key="18">
                 <Link to="/CompanyUsers">Company Users</Link>
               </Menu.Item>
@@ -230,9 +225,6 @@ const DashboardLayout = ({
                 </Menu.Item>
               </Menu.SubMenu>
 
-              <Menu.Item key="15">
-                <Link to="/Chargingwallet">Charging Wallet</Link>
-              </Menu.Item>
               <Menu.SubMenu key="sub12" title="Subscripions">
                 <Menu.Item key="116">
                   <Link to="/SubscriptionsKinds">Subscripions Kinds</Link>
@@ -244,6 +236,9 @@ const DashboardLayout = ({
                   <Link to="/AllSubscriptions">All Subscriptions</Link>
                 </Menu.Item>
               </Menu.SubMenu>
+              <Menu.Item key="15">
+                <Link to="/Chargingwallet">Charging Wallet</Link>
+              </Menu.Item>
 
               <Menu.Item key="14">
                 <Link to="/Driver">Driver</Link>
