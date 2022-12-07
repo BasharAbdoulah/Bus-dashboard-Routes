@@ -227,7 +227,7 @@ const DashboardLayout = ({
 
               <Menu.SubMenu key="sub12" title="Subscripions">
                 <Menu.Item key="116">
-                  <Link to="/SubscriptionsKinds">Subscripions Kinds</Link>
+                  <Link to="/PackagesKinds">Packages Kinds</Link>
                 </Menu.Item>
                 <Menu.Item key="1160">
                   <Link to="/Companies">Companies</Link>

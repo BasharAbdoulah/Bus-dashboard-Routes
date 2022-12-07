@@ -48,7 +48,7 @@ import UserPackages from "views/Role/UserPackages";
 import AllPackages from "views/Company/AllPackages";
 import CompanyUsers from "views/Company/CompanyUsers";
 import Companies from "views/Subscripions/Companies";
-import SubscriptionsKinds from "views/Subscripions/SubscriptionsKinds";
+import PackagesKinds from "views/Subscripions/PackagesKinds";
 import SubscriptionsByKind from "views/Subscripions/SubscriptionsByKind";
 import AllSubscriptions from "views/Subscripions/AllSubscriptions";
 
@@ -79,11 +79,7 @@ const Router = () => {
       <MainRoutes exact path="/OnlinePassengers" component={OnlinePassengers} />
       <MainRoutes exact path="/DeletedUsers" component={DeletedUsers} />
       <MainRoutes exact path="/Companies" component={Companies} />
-      <MainRoutes
-        exact
-        path="/SubscriptionsKinds"
-        component={SubscriptionsKinds}
-      />
+      <MainRoutes exact path="/PackagesKinds" component={PackagesKinds} />
 
       <MainRoutes
         exact

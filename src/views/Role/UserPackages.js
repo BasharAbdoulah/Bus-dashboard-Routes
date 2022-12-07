@@ -5,8 +5,7 @@ import useFetch from "hooks/useFetch";
 import axios from "axios";
 import { Table } from "antd";
 import { useSelector } from "react-redux";
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiY29tcEtHTCIsIlJvbGUiOiJDb21wYW55IiwiZXhwIjoxNjY4NTk3OTQ0LCJpc3MiOiJJbnZlbnRvcnlBdXRoZW50aWNhdGlvblNlcnZlciIsImF1ZCI6IkludmVudG9yeVNlcnZpY2VQb3RtYW5DbGllbnQifQ.g--mk8XFDvHVxlsM8XW8xo0DhHH9yGqEbeLIhIfe5ak";
+
 function UserPackages() {
   const [response, setResponse] = useState();
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,15 +29,17 @@ function UserPackages() {
         }
       )
       .then((res) => {
-        setResponse(res.data);
-        setLoading(false);
+        if (res.data.status) {
+          setResponse(res.data);
+          setLoading(false);
+        }
       })
       .catch((err) => {
         console.error(err);
         setLoading(false);
       });
   }, []);
-
+  console.log(response);
   const columns = [
     {
       title: "Activation Date",
