@@ -7,17 +7,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 function AllPackages() {
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState([]);
   const user = useSelector((state) => state.auth);
-  const [modal2Open, setModal2Open] = useState(false);
-  const [companyName, setCompanyName] = useState("");
-  const [description, setDescription] = useState("");
+  const [packageData, setPackageData] = useState({});
   const [addModalIs, setAddModalIs] = useState(false);
-  const [price, setPrice] = useState(0);
-  const [kind, setKind] = useState(0);
-  const [name, setName] = useState();
-  const [deletedId, setDeletedId] = useState();
+  const [editMode, setEditMode] = useState(false);
 
   const {
     data = [],
@@ -33,57 +28,31 @@ function AllPackages() {
     true
   );
 
-  console.log(data);
   useEffect(() => {
     if (true) executeFetch({ PageNumber: currentPage });
   }, []);
 
   // Handle edit function
   const handleEdit = (item) => {
-    setModal2Open(true);
-    setCompanyName(item.companyName);
-    setDescription(item.desc);
-    setKind(item.kind);
-    setName(item.name);
-    setDeletedId(item.id);
-    setPrice(item.price);
+    setAddModalIs(true);
+    setEditMode(true);
+    setPackageData({
+      companyName: item.companyName,
+      desc: item.desc,
+      kind: item.kind,
+      name: item.name,
+      price: item.price,
+      id: item.id,
+    });
   };
 
-  // handle ok action
-  const onOk = async (e) => {
-    console.log(name, description, price, kind);
-    e.preventDefault();
-    await axios
-      .post(
-        `${process.env.REACT_APP_API_HOST}api/EditPackage`,
-        {
-          id: deletedId,
-          Name: name,
-          Desc: description,
-          Price: price,
-          Kind: parseInt(kind),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${user?.token}`,
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data.status) {
-          message.success("The package has been edited");
-          executeFetch();
-          setModal2Open(false);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        message.error("Sorry, something went wrong!");
-      });
-  };
   const compName = data?.description[0].companyName;
 
-  const onAddOk = () => {};
+  const onAddOk = () => {
+    setAddModalIs(false);
+    executeFetch();
+    setEditMode(false);
+  };
 
   return (
     <>
@@ -92,86 +61,28 @@ function AllPackages() {
         title="Edit your package"
         centered
         visible={addModalIs}
-        onOk={onAddOk}
+        // onOk={onAddOk}
         okText="Submit"
         onCancel={() => setAddModalIs(false)}
         footer={null}
       >
-        <AddPackage />
+        <AddPackage
+          onAddOk={onAddOk}
+          packageData={packageData}
+          editMode={editMode}
+        />
       </Modal>
       {/* End add modal */}
 
-      {/* Edit modal */}
-      <Modal
-        title="Edit your package"
-        centered
-        visible={modal2Open}
-        onOk={onOk}
-        okText="Submit"
-        onCancel={() => setModal2Open(false)}
-        footer={null}
-      >
-        <div className="add-backage-co">
-          <form onSubmit={onOk}>
-            <div className="form-group edit">
-              <label htmlFor="name">Company Name:</label>
-              <input
-                required
-                value={companyName}
-                onChange={(e) => setCompanyName(e.target.value)}
-                type={"text"}
-                id="name"
-              />
-            </div>
-            <div className="form-group edit">
-              <label htmlFor="description">Decription:</label>
-              <input
-                required
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                type={"text"}
-                id="description"
-              />
-            </div>
-            <div className="form-group edit">
-              <label htmlFor="price">Price:</label>
-              <input
-                required
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                type={"number"}
-                id="price"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="kind">Kind:</label>
-              <input
-                required
-                value={kind}
-                onChange={(e) => setKind(e.target.value)}
-                type={"number"}
-                id="kind"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="name">Name:</label>
-              <input
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                type={"text"}
-                id="name"
-              />
-            </div>
-            <input type="submit" className="submit" />
-          </form>
-        </div>
-      </Modal>
       <div className="packages-table-co">
         <div className="add-package-head">
           <p>{compName ? compName : "No"} Packages</p>
-          <button onClick={() => setAddModalIs(true)}>
+          <button
+            onClick={() => {
+              setAddModalIs(true);
+              setEditMode(false);
+            }}
+          >
             <PlusCircleFilled /> Add Package
           </button>
         </div>

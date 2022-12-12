@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
 import querySring from "query-string";
-import useFetch from "hooks/useFetch";
 import axios from "axios";
 import { Table } from "antd";
 import { useSelector } from "react-redux";
@@ -10,7 +8,7 @@ function UserPackages() {
   const [response, setResponse] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const { id, name, phone } = querySring.parse(window.location.search);
+  const { id } = querySring.parse(window.location.search);
   const user = useSelector((state) => state.auth);
 
   // api/ListPackageByUserIdForCompany
@@ -39,7 +37,7 @@ function UserPackages() {
         setLoading(false);
       });
   }, []);
-  console.log(response);
+
   const columns = [
     {
       title: "Activation Date",

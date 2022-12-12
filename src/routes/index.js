@@ -51,6 +51,7 @@ import Companies from "views/Subscripions/Companies";
 import PackagesKinds from "views/Subscripions/PackagesKinds";
 import SubscriptionsByKind from "views/Subscripions/SubscriptionsByKind";
 import AllSubscriptions from "views/Subscripions/AllSubscriptions";
+import CompanyUserPackages from "views/Company/CompanyUserPackages";
 
 const Router = () => {
   return (
@@ -70,6 +71,11 @@ const Router = () => {
       <MainRoutes exact path="/BusCompany" component={BusCompany} />
       <MainRoutes exact path="/AllPackages" component={AllPackages} />
       <MainRoutes exact path="/CompanyUsers" component={CompanyUsers} />
+      <MainRoutes
+        exact
+        path="/CompanyUserPackages"
+        component={CompanyUserPackages}
+      />
       <MainRoutes exact path="/Driver" component={Driver} />
       <MainRoutes
         exact
@@ -99,7 +105,7 @@ const Router = () => {
       <MainRoutes exact path="/PaymentByCompany" component={PaymentByCompany} />
       <MainRoutes exact path="/PaymentOfCompany" component={PaymentCompany} />
       <MainRoutes exact path="/Company" component={Company} />
-      <MainRoutes exact path="/UserCompany" component={UserCompany} />
+      {/* <MainRoutes exact path="/UserCompany" component={UserCompany} />  */}
       <MainRoutes exact path="/DriverCompany" component={DriverCompany} />
       <MainRoutes exact path="/BusByCompany" component={BusByCompany} />
       <MainRoutes exact path="/Promoter" component={Promoter} />
