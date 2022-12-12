@@ -372,12 +372,15 @@ const Users = () => {
 
   return (
     <div>
+      <h3>Users</h3>
       <div className="user-search">
         <div className="s-container">
           <Input placeholder="Search by phone..." onChange={handleSearch} />
           <SearchOutlined />
         </div>
       </div>
+      <h4>Total Wallets: {data?.description?.sumTotal}</h4>
+      <h4>Users Count: {data?.description?.count}</h4>
       <Table
         columns={searchMode ? columns2 : columns}
         rowKey={"id"}

@@ -22,7 +22,7 @@ function SubscripionsDetails() {
     },
     true
   );
-
+  console.log(data);
   useEffect(async () => {
     const packages = data?.description.filter(
       (packItem) => packItem.companyID === subscriptionType

@@ -1,12 +1,13 @@
-import { Empty, Table } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import { Empty, Space, Table } from "antd";
 import useFetch from "hooks/useFetch";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function CompanyUsers() {
   const user = useSelector((state) => state.auth);
   const [currentPage, setCurrentPage] = useState(1);
-  const [tableData, setTableData] = useState([]);
 
   const {
     data = [],
@@ -24,8 +25,8 @@ function CompanyUsers() {
   );
 
   useEffect(() => {
-    setTableData(data?.description);
-  }, [data, error, loading]);
+    executeFetch({ PageNumber: currentPage });
+  }, [currentPage]);
 
   const columns = [
     {
@@ -43,9 +44,22 @@ function CompanyUsers() {
       dataIndex: "userName",
       key: "userName",
     },
+    {
+      title: "Actions",
+      dataIndex: "",
+      key: "id",
+      render: (data) => {
+        return (
+          <Space size="large" key={data}>
+            <Link to={`/CompanyUserPackages?id=${data.userId}`}>Packages</Link>
+          </Space>
+        );
+      },
+    },
   ];
   return (
     <div>
+      <h3>Total users: {data?.usertotal}</h3>
       <Table
         columns={columns}
         rowKey={"id"}
@@ -53,10 +67,10 @@ function CompanyUsers() {
           onChange: (page) => {
             setCurrentPage(page);
           },
-          total: tableData?.length,
+          total: data?.usertotal,
           current: currentPage,
         }}
-        dataSource={tableData}
+        dataSource={data?.description}
         loading={loading}
         error={error}
         size={"middle"}

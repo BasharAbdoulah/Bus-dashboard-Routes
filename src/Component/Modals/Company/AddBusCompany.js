@@ -2,7 +2,7 @@ import React from "react";
 //component
 import { Modal, Form, Row, Col, Input, Alert, Select } from "antd";
 //redux
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 //redux action
 import { closeModal } from "redux/modal/action";
 
@@ -10,6 +10,7 @@ import { closeModal } from "redux/modal/action";
 import useFetch from "hooks/useFetch";
 import { useState } from "react";
 import { useEffect } from "react";
+import useSelection from "antd/lib/table/hooks/useSelection";
 const { Option } = Select;
 const AddBusCompany = ({
   visible,
@@ -19,6 +20,8 @@ const AddBusCompany = ({
   mPayloads,
 }) => {
   const [form] = Form.useForm();
+  const state = useSelector((state) => state);
+  console.log(state);
   //states
   const [editId, setEditId] = useState(null);
   //for add bus

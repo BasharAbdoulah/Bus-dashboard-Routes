@@ -30,6 +30,8 @@ const BusByCompany = ({ token, openModal }) => {
   const [value, setValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState([]);
+  const [busActiveData, setBusActiveData] = useState([]);
+  const [busUnactiveData, setBusUnactiveData] = useState([]);
 
   // for table data
   const {
