@@ -199,6 +199,9 @@ const DashboardLayout = ({
                 <Menu.Item key="10">
                   <Link to="/Map">Map</Link>
                 </Menu.Item>
+                <Menu.Item key="110">
+                  <Link to="/MapTacking">Buses Tacking</Link>
+                </Menu.Item>
                 {/* <Menu.Item key="9">
             <Link to="/MultiMap">MultiMap</Link>
           </Menu.Item> */}

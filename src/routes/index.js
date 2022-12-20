@@ -38,7 +38,7 @@ import PromoterStatistic from "views/Promoter/PromoterStatistic";
 import Inspector from "views/Inspector/Inspector";
 import InspectorBus from "views/Inspector/InspectorBus";
 import InspectorUser from "views/Inspector/InspectorUser";
-
+import TrackingMap from "../views/Map/RealtimeMap/Index.js";
 import OfflinePassengers from "views/Role/OfflinePassengers";
 import OnlinePassengers from "views/Role/OnlinePassengers";
 import Send from "views/Paymentwallet/Send";
@@ -66,6 +66,7 @@ const Router = () => {
       <MainRoutes exact path="/Trips" component={Trips} />
       <MainRoutes exact path="/Users" component={Users} />
       <MainRoutes exact path="/Map" component={Map} />
+      <MainRoutes exact path="/MapTacking" component={TrackingMap} />
       <MainRoutes exact path="/MultiMap" component={MultiMap} />
       <MainRoutes exact path="/Bus" component={Bus} />
       <MainRoutes exact path="/BusCompany" component={BusCompany} />

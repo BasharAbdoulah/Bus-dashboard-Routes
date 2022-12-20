@@ -48,7 +48,7 @@ function OnlinePassengers() {
     setConnection(newConnection);
     return () => {};
   }, []);
-
+  console.log(connection);
   if (connection) {
     if (!connection.connectionStarted) {
       console.log("connectionStarted");
