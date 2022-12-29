@@ -62,5 +62,8 @@
 .total-title strong {
   color: #000;
 }
-
+.map-container {
+  width: 100%;
+  height: 100vh;
+}
 /* customize map popup */

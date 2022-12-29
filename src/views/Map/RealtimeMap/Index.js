@@ -1,11 +1,7 @@
 import * as signalR from "@microsoft/signalr";
-import React, { useCallback, useEffect, useState } from "react";
-import { GoogleMapsProvider } from "@ubilabs/google-maps-react-hooks";
-import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import SuperClusterAlgorithm from "./SuperClusterAlgorithm.js";
-import data from "./data";
-import { NavigationControl } from "mapbox-gl";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { GoogleMap, InfoWindow, Marker, useLoadScript } from "@react-google-maps/api";
 const NEXT_PUBLIC_MAP_API_KEY = "AIzaSyDJ-2jJpL6Ast3hT88lvUx9S2F5COO0nSM";
 
 // lat: 29.281596, our location
@@ -13,73 +9,110 @@ const NEXT_PUBLIC_MAP_API_KEY = "AIzaSyDJ-2jJpL6Ast3hT88lvUx9S2F5COO0nSM";
 const mapOptions = {
   zoom: 12,
   center: {
-    lat: 43.68,
-    lng: -79.43,
+    lat: 29.281596,
+    lng: 47.9602518,
   },
 };
 function Index() {
-  const [mapContainer, setMapContainer] = useState();
-  const onLoad = useCallback((map) => addMarkers(map), []);
-  // const [connection, setConnection] = useState(null);
-  const user = useSelector((state) => state.auth);
 
-  // SignalR function not completed
-  // useEffect(() => {
-  //   const connection = new signalR.HubConnectionBuilder()
-  //     .withUrl(process.env.REACT_APP_API_HOST + "chathub",)
-  //     .build();
-  //   // setConnection(connection)
-  //   console.log(connection);
+  const [paymentLiveBus, setPaymentLiveBus] = useState([]);
+  const [mapContainer2, setMapContainer] = useState();
+  const map = useRef(null);
+  const mapContainer = useRef(null);
+  const user = useSelector((state) => state.auth)
+  const [connection, setConnection] = useState(null);
+  const [connectionId, setConnectionId] = useState("");
+  const [selectedMarker, setSelectedMarker] = useState();
 
-  //   connection.on("ListMapOfBus", function (data) {
-  //     console.log(data);
-  //   });
+  
+  
+  useEffect(() => {
+    const protocol = new signalR.JsonHubProtocol();
+    const transport = signalR.HttpTransportType.WebSockets;
+    
+    const options = {
+      transport,
+      logMessageContent: true,
+      logger: signalR.LogLevel.Trace,
+      accessTokenFactory: () => user?.token,
+    };
+    
+    const newConnection = new signalR.HubConnectionBuilder()
+    .withUrl(
+      process.env.REACT_APP_API_HOST + "chathub",
+      options /*{ jwtBearer: token }*/
+      )
+      .withHubProtocol(protocol)
+      .build();
+      setConnection(newConnection);
+    return () => {};
+  }, []);
+  
+  
+  useEffect(() => {
+    // window.addEventListener("click", overlayClick) PaymentLive;
+    if (connection) {
+      if (!connection.connectionStarted) {
+        connection
+          .start()
+          .then((result) => {
+            connection.on("RecieveConnectionId", (id) => {
+              setConnectionId(id);
+            });
+            console.log("new arsdfsdfgasfgsdgr");
+            connection.invoke('GetListBusMap')
+            connection.on("ListBusMap", (data) => {
 
-  //   connection.start();
-  // }, []);
+              setPaymentLiveBus((prev) => {
+                let arr = prev;
+                arr.push(...data);
+                console.log("new aaaaà22äarr", arr);
+                return [...arr];
+               });
+              });
+              
+              
+            })
+            .catch((err) => console.error("Failed To Connect", err));
+          }
+        }
+        // else {
+    //   console.log("remove event listener");
+    //   window.removeEventListener("click", overlayClick);
+    // }
+    console.log("connection is run");
+  }, [connection]);
+  
+  console.log("paymentLiddssveBus",paymentLiveBus)
 
-  return (
-    <GoogleMapsProvider
-      googleMapsAPIKey={NEXT_PUBLIC_MAP_API_KEY}
-      mapOptions={mapOptions}
-      mapContainer={mapContainer}
-      onLoadMap={onLoad}
-    >
-      <div
-        ref={(node) => setMapContainer(node)}
-        style={{ height: "100vh" }}
-      ></div>
-    </GoogleMapsProvider>
-  );
-}
-
-function addMarkers(map) {
-  const infoWindow = new window.google.maps.InfoWindow();
-
-  const markers = data.map(([name, lat, lng, icon]) => {
-    const marker = new window.google.maps.Marker({
-      position: { lat, lng },
-      icon: "http://maps.google.com/mapfiles/dir_6.png",
-    }); //  this is the marker that take lng and lat from the main data array
-
-    marker.addListener("click", () => {
-      infoWindow.setPosition({ lat, lng });
-      infoWindow.setContent(`
-      <div className="info">
-      <h2>${name}</h2>
-      </div>
-      `);
-      infoWindow.open({ map });
-    });
-
-    return marker;
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: NEXT_PUBLIC_MAP_API_KEY,
   });
 
-  new MarkerClusterer({
-    markers,
-    map,
-    algorithm: new SuperClusterAlgorithm({ radius: 200 }),
-  });
+  if (!isLoaded) return <div>Loading...</div>;
+  return <Map />;
+
+  function Map() {
+    const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
+  
+    return (
+      <GoogleMap zoom={mapOptions.zoom} center={mapOptions.center} mapContainerClassName="map-container">
+        {paymentLiveBus?.map(({latitude1,longitude1, busID}, index) => {
+          console.log(latitude1, longitude1)
+          return (
+            <Marker  key={index} position={{lat: latitude1, lng: longitude1}} options={
+              {
+                icon: "http://maps.google.com/mapfiles/dir_6.png"
+              }
+            } />
+          )
+        } )}
+      </GoogleMap>
+    );
+  }
 }
+
+ 
+
 
 export default Index;
