@@ -22,7 +22,7 @@ function Index() {
   const user = useSelector((state) => state.auth)
   const [connection, setConnection] = useState(null);
   const [connectionId, setConnectionId] = useState("");
-  const [selectedMarker, setSelectedMarker] = useState();
+  const [selectedMarker, setSelectedMarker] = useState({busID: "",lat: "", lng: ""});
 
   
   
@@ -83,7 +83,7 @@ function Index() {
     console.log("connection is run");
   }, [connection]);
   
-  console.log("paymentLiddssveBus",paymentLiveBus)
+
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: NEXT_PUBLIC_MAP_API_KEY,
@@ -98,15 +98,19 @@ function Index() {
     return (
       <GoogleMap zoom={mapOptions.zoom} center={mapOptions.center} mapContainerClassName="map-container">
         {paymentLiveBus?.map(({latitude1,longitude1, busID}, index) => {
-          console.log(latitude1, longitude1)
           return (
             <Marker  key={index} position={{lat: latitude1, lng: longitude1}} options={
               {
                 icon: "http://maps.google.com/mapfiles/dir_6.png"
               }
-            } />
+            } onClick={() => {
+              setSelectedMarker({busID: busID, lat: latitude1, lng: longitude1})
+            }} />
           )
         } )}
+          {/* {selectedMarker.busID &&  <InfoWindow position={{lat: selectedMarker?.lat, lng: selectedMarker?.lng }}>
+          <h2>{selectedMarker?.busID}</h2>
+        </InfoWindow>} */}
       </GoogleMap>
     );
   }
