@@ -133,7 +133,7 @@ const ListTripUser = () => {
         }}
         dataSource={tab_data?.data}
         loading={loading}
-        size="small"
+        size="middle"
       />
     </div>
   );

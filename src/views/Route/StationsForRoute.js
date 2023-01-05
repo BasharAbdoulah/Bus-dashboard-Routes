@@ -117,6 +117,7 @@ const StationsForRoute = () => {
         }}
         dataSource={tab_data?.data}
         loading={loading}
+        size={"middle"}
       />
     </div>
   );

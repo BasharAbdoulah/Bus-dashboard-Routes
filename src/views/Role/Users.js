@@ -2,8 +2,22 @@ import React, { useEffect, useState } from "react";
 //component
 import { Link } from "react-router-dom";
 
-import { Form, Space, Dropdown, Menu, Table, message, Modal } from "antd";
-import { LockOutlined, UnlockOutlined, WarningFilled } from "@ant-design/icons";
+import {
+  Form,
+  Space,
+  Dropdown,
+  Menu,
+  Table,
+  message,
+  Modal,
+  Input,
+} from "antd";
+import {
+  LockOutlined,
+  SearchOutlined,
+  UnlockOutlined,
+  WarningFilled,
+} from "@ant-design/icons";
 import {
   CameraOutlined,
   DeleteOutlined,
@@ -19,13 +33,11 @@ import axios from "axios";
 const Users = () => {
   const onSearch = (value) => console.log(value);
   const [currentPage, setCurrentPage] = useState(1);
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState({ list: [], count: 0 });
+  const [searchMode, setSearchMode] = useState(false);
   const history = useHistory();
   const search = history.location.search;
   const user = useSelector((state) => state.auth);
-  const [rerender, setrerender] = useState(false);
-  // ?id=72c66ad3-b183-4e5f-8c7a-c8f4a77f816b&name=96597333839&phone=96597333839
-  //98dfcfb2-dbdb-496c-907d-d79a776c8e50
   const idFromPathName = search.substring(
     search.indexOf("=") + 1,
     search.indexOf("&")
@@ -38,26 +50,13 @@ const Users = () => {
     executeFetch,
   } = useFetch("https://route.click68.com/api/WalletUser", "post", {}, true);
 
+  console.log("pagenation", data);
   useEffect(async () => {
-    await axios
-      .post(
-        "https://route.click68.com/api/WalletUser",
-        {
-          PageNumber: currentPage,
-        },
-        {
-          headers: {
-            Authorization: `bearer ${user.token}`,
-          },
-        }
-      )
-      .then((result) => {
-        console.log(result);
-        if (result?.data.status) {
-          setTableData(result.data.description.list);
-        }
-      });
-  }, []);
+    setTableData({
+      list: data?.description.list,
+      count: data?.description.count,
+    });
+  }, [data, error, loading]);
 
   // useEffect(() => {
   //   if (data?.status === true && !loading) {
@@ -192,6 +191,11 @@ const Users = () => {
             Chargings
           </Link>
         </Menu.Item>
+        <Menu.Item key="4">
+          <Link to={`/UserPackages?id=${data.userID ? data.userID : data.id}`}>
+            Packages
+          </Link>
+        </Menu.Item>
       </Menu>
     );
     return (
@@ -220,9 +224,9 @@ const Users = () => {
       key: "email",
     },
     {
-      title: "phone",
+      title: "Phone number",
       dataIndex: "user",
-      key: "phone",
+      key: "phoneNumber",
     },
     {
       title: "Wallet",
@@ -271,32 +275,126 @@ const Users = () => {
       },
     },
   ];
+  const columns2 = [
+    {
+      title: " Name",
+      dataIndex: "name",
+      key: "userName",
+    },
+    {
+      title: "userName",
+      dataIndex: "userName",
+      key: "userName",
+    },
+    {
+      title: "email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Phone number",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
+    },
+    {
+      title: "State",
+      dataIndex: "id",
+      key: "id",
+      render: (data, allData) => {
+        return (
+          <Space size="large" key={data}>
+            {allData?.lockoutEnabled === true ? (
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleActive(data);
+                }}
+              >
+                <LockOutlined />
+              </a>
+            ) : (
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleDisActive(data);
+                }}
+              >
+                <UnlockOutlined />
+              </a>
+            )}
+          </Space>
+        );
+      },
+    },
+    {
+      title: "Action",
+      dataIndex: "",
+      key: "id",
+      render: (data) => {
+        return <Actions data={data} />;
+      },
+    },
+  ];
 
-  console.log(tableData);
+  const handleSearch = async (e) => {
+    if (e.target.value == "") {
+      setSearchMode(false);
+      executeFetch();
+    } else {
+      setSearchMode(true);
+      await axios
+        .post(
+          `${process.env.REACT_APP_API_HOST}api/SearchByUser`,
+          { keyword: e.target.value },
+          {
+            headers: {
+              Authorization: `Bearer ${user?.token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log("search value", res.data);
+          setTableData({
+            list: res.data.description,
+            count: 1,
+          });
+        })
+        .catch((err) => console.error(err));
+    }
+  };
 
-  // useEffect(() => {
-  //   let isFound = tableData.find((d) => d.page === currentPage);
-  //   if (!isFound) executeFetch({ PageNumber: currentPage });
-  // }, [currentPage]);
-
-  // let tab_data = tableData.find((i) => i.page === currentPage);
+  useEffect(() => {
+    // let isFound = tableData.find((d) => d.page === currentPage);
+    if (true) executeFetch({ PageNumber: currentPage });
+  }, [currentPage]);
 
   return (
     <div>
+      <h3>Users</h3>
+      <div className="user-search">
+        <div className="s-container">
+          <Input placeholder="Search by phone..." onChange={handleSearch} />
+          <SearchOutlined />
+        </div>
+      </div>
+      <h4>Total Wallets: {data?.description?.sumTotal}</h4>
+      <h4>Users Count: {data?.description?.count}</h4>
       <Table
-        columns={columns}
+        columns={searchMode ? columns2 : columns}
         rowKey={"id"}
         pagination={{
           onChange: (page) => {
             setCurrentPage(page);
           },
-          total: tableData.length,
+          total: tableData.count,
           current: currentPage,
         }}
-        dataSource={tableData}
+        dataSource={tableData?.list}
         loading={loading}
         error={""}
-        size="small"
+        size="middle"
       />
     </div>
   );

@@ -30,6 +30,8 @@ const BusByCompany = ({ token, openModal }) => {
   const [value, setValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [tableData, setTableData] = useState([]);
+  const [busActiveData, setBusActiveData] = useState([]);
+  const [busUnactiveData, setBusUnactiveData] = useState([]);
 
   // for table data
   const {
@@ -211,7 +213,7 @@ const BusByCompany = ({ token, openModal }) => {
 
   return (
     <div>
-      <Row>
+      <Row style={{ margin: "20px 0" }}>
         <Col>
           <div>
             <Space>
@@ -256,7 +258,7 @@ const BusByCompany = ({ token, openModal }) => {
             : tab_data?.data
         }
         loading={loading || activeLoading}
-        size="small"
+        size="middle"
       />
     </div>
   );

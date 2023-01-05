@@ -1,4 +1,4 @@
-import "../../styles/passengers.scss";
+import "../../styles/global.scss";
 import { Spin, Table } from "antd";
 import useFetch from "hooks/useFetch";
 import React, { useEffect, useState } from "react";
@@ -48,7 +48,7 @@ function OnlinePassengers() {
     setConnection(newConnection);
     return () => {};
   }, []);
-
+  console.log(connection);
   if (connection) {
     if (!connection.connectionStarted) {
       console.log("connectionStarted");
@@ -145,7 +145,7 @@ function OnlinePassengers() {
         }}
         dataSource={liveCount}
         loading={loading}
-        size="small"
+        size="middle"
       />
     </div>
   );

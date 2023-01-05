@@ -1,6 +1,6 @@
 import ModalContainer from "Component/ModalContanier/ModalContainer";
 import "./App.css";
-import "./styles/passengers.scss";
+import "./styles/global.scss";
 
 // main Route
 import Router from "./routes/index";

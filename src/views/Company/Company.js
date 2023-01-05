@@ -40,8 +40,7 @@ const Company = ({ token, openModal }) => {
     {},
     token
   );
-  console.log("data");
-  console.log(data);
+
   const {
     data: deleteData = {},
     error: deleteError,
@@ -154,7 +153,7 @@ const Company = ({ token, openModal }) => {
         columns={columns}
         dataSource={data?.description}
         loading={loading}
-        size="small"
+        size="middle"
       />
     </div>
   );

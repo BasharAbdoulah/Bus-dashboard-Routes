@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from "react";
 //component
-import {
-  Row,
-  Col,
-  Input,
-  Checkbox,
-  Form,
-  Select,
-  Alert,
-  Empty,
-} from "antd";
+import { Row, Input, Form, Select, Empty } from "antd";
 import { Table } from "ant-table-extensions";
-import useFetch from "hooks/useFetch";
 import { SearchOutlined } from "@ant-design/icons";
 import axios, { Axios } from "axios";
 import { useSelector } from "react-redux";
@@ -123,8 +113,7 @@ const Send = () => {
             }}
             dataSource={paymentsList}
             loading={isLoading}
-            size="small"
-            exportable
+            size="middle"
           />
         )}
       </Form>

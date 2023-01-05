@@ -127,6 +127,7 @@ const DriverCompany = ({ token, openModal }) => {
   return (
     <div>
       <Button
+        style={{ marginBottom: "10px" }}
         onClick={() => {
           openModal(constants.modalType_AddDriverCompany, executeFetch);
         }}
@@ -137,7 +138,7 @@ const DriverCompany = ({ token, openModal }) => {
         columns={columns}
         dataSource={data?.description}
         loading={loading}
-        size="small"
+        size="middle"
       />
     </div>
   );

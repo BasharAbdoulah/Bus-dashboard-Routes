@@ -38,116 +38,97 @@ import PromoterStatistic from "views/Promoter/PromoterStatistic";
 import Inspector from "views/Inspector/Inspector";
 import InspectorBus from "views/Inspector/InspectorBus";
 import InspectorUser from "views/Inspector/InspectorUser";
-
+import TrackingMap from "../views/Map/RealtimeMap/Index.js";
 import OfflinePassengers from "views/Role/OfflinePassengers";
 import OnlinePassengers from "views/Role/OnlinePassengers";
 import Send from "views/Paymentwallet/Send";
 import DeletedUsers from "views/Role/DeletedUsers";
-import Subscripions from "views/Subscripions/Subscripions";
 import SubscripionsDetails from "views/Subscripions/SubscripionsDetails";
+import UserPackages from "views/Role/UserPackages";
+import AllPackages from "views/Company/AllPackages";
+import CompanyUsers from "views/Company/CompanyUsers";
+import Companies from "views/Subscripions/Companies";
+import PackagesKinds from "views/Subscripions/PackagesKinds";
+import SubscriptionsByKind from "views/Subscripions/SubscriptionsByKind";
+import AllSubscriptions from "views/Subscripions/AllSubscriptions";
+import CompanyUserPackages from "views/Company/CompanyUserPackages";
 
 const Router = () => {
-    return (
-        <Switch>
-            <MainRoutes exact path="/" component={Home} />
-            <MainRoutes exact path="/Route" component={Route} />
-            <MainRoutes exact path="/Station" component={Station} />
-            <MainRoutes
-                exact
-                path="/StationsForRoute"
-                component={StationsForRoute}
-            />
-            <MainRoutes
-                exact
-                path="/RouteForStation"
-                component={RouteForStation}
-            />
-            <MainRoutes exact path="/RouteStation" component={RouteStation} />
-            <MainRoutes exact path="/Role" component={Role} />
-            <MainRoutes exact path="/Trips" component={Trips} />
-            <MainRoutes exact path="/Users" component={Users} />
-            <MainRoutes exact path="/Map" component={Map} />
-            <MainRoutes exact path="/MultiMap" component={MultiMap} />
-            <MainRoutes exact path="/Bus" component={Bus} />
-            <MainRoutes exact path="/BusCompany" component={BusCompany} />
-            <MainRoutes exact path="/Driver" component={Driver} />
-            <MainRoutes
-                exact
-                path="/OfflinePassengers"
-                component={OfflinePassengers}
-            />
-            <MainRoutes
-                exact
-                path="/OnlinePassengers"
-                component={OnlinePassengers}
-            />
-            <MainRoutes
-                exact
-                path="/DeletedUsers"
-                component={DeletedUsers}
-            />
-            <MainRoutes
-                exact
-                path="/Subscripions"
-                component={Subscripions}
-            />
-            <MainRoutes
-                exact
-                path="/Subscripions/SubscripionsDetails"
-                component={SubscripionsDetails}
-            />
-            <MainRoutes
-                exact
-                path="/Chargingwallet"
-                component={Chargingwallet}
-            />
-            <MainRoutes exact path="/Payments" component={Payments} />
-            <MainRoutes exact path="/Send" component={Send} />
-            <MainRoutes
-                exact
-                path="/PaymentByCompany"
-                component={PaymentByCompany}
-            />
-            <MainRoutes
-                exact
-                path="/PaymentOfCompany"
-                component={PaymentCompany}
-            />
-            <MainRoutes exact path="/Company" component={Company} />
-            <MainRoutes exact path="/UserCompany" component={UserCompany} />
-            <MainRoutes exact path="/DriverCompany" component={DriverCompany} />
-            <MainRoutes exact path="/BusByCompany" component={BusByCompany} />
-            <MainRoutes exact path="/Promoter" component={Promoter} />
-            <MainRoutes exact path="/Inspector" component={Inspector} />
-            <MainRoutes exact path="/InspectorBus" component={InspectorBus} />
-            <MainRoutes exact path="/InspectorUser" component={InspectorUser} />
-            <MainRoutes
-                exact
-                path="/PromoterCharge"
-                component={PromoterCharge}
-            />
-            <MainRoutes
-                exact
-                path="/PromoterStatistic"
-                component={PromoterStatistic}
-            />
-            <MainRoutes exact path="/PaymentUser" component={ListPaymentUser} />
-            <MainRoutes exact path="/TripUser" component={ListTripUser} />
-            <MainRoutes
-                exact
-                path="/ChargingUser"
-                component={ListChargingUser}
-            />
-            <MainRoutes exact path="/RequestRoute" component={RequestRoute} />
-            <MainRoutes
-                exact
-                path="/RequestDetails"
-                component={RequestDetails}
-            />
+  return (
+    <Switch>
+      <MainRoutes exact path="/" component={Home} />
+      <MainRoutes exact path="/Route" component={Route} />
+      <MainRoutes exact path="/Station" component={Station} />
+      <MainRoutes exact path="/StationsForRoute" component={StationsForRoute} />
+      <MainRoutes exact path="/RouteForStation" component={RouteForStation} />
+      <MainRoutes exact path="/RouteStation" component={RouteStation} />
+      <MainRoutes exact path="/Role" component={Role} />
+      <MainRoutes exact path="/Trips" component={Trips} />
+      <MainRoutes exact path="/Users" component={Users} />
+      <MainRoutes exact path="/Map" component={Map} />
+      <MainRoutes exact path="/MapTacking" component={TrackingMap} />
+      <MainRoutes exact path="/MultiMap" component={MultiMap} />
+      <MainRoutes exact path="/Bus" component={Bus} />
+      <MainRoutes exact path="/BusCompany" component={BusCompany} />
+      <MainRoutes exact path="/AllPackages" component={AllPackages} />
+      <MainRoutes exact path="/CompanyUsers" component={CompanyUsers} />
+      <MainRoutes
+        exact
+        path="/CompanyUserPackages"
+        component={CompanyUserPackages}
+      />
+      <MainRoutes exact path="/Driver" component={Driver} />
+      <MainRoutes
+        exact
+        path="/OfflinePassengers"
+        component={OfflinePassengers}
+      />
+      <MainRoutes exact path="/OnlinePassengers" component={OnlinePassengers} />
+      <MainRoutes exact path="/DeletedUsers" component={DeletedUsers} />
+      <MainRoutes exact path="/Companies" component={Companies} />
+      <MainRoutes exact path="/PackagesKinds" component={PackagesKinds} />
 
-            <Routerr exact path="/Login" component={Login} />
-        </Switch>
-    );
+      <MainRoutes
+        exact
+        path="/SubscriptionsByKind"
+        component={SubscriptionsByKind}
+      />
+      <MainRoutes
+        exact
+        path="/Companies/SubscripionsDetails"
+        component={SubscripionsDetails}
+      />
+      <MainRoutes exact path="/AllSubscriptions" component={AllSubscriptions} />
+
+      <MainRoutes exact path="/Chargingwallet" component={Chargingwallet} />
+      <MainRoutes exact path="/Payments" component={Payments} />
+      <MainRoutes exact path="/Send" component={Send} />
+      <MainRoutes exact path="/PaymentByCompany" component={PaymentByCompany} />
+      <MainRoutes exact path="/PaymentOfCompany" component={PaymentCompany} />
+      <MainRoutes exact path="/Company" component={Company} />
+      {/* <MainRoutes exact path="/UserCompany" component={UserCompany} />  */}
+      <MainRoutes exact path="/DriverCompany" component={DriverCompany} />
+      <MainRoutes exact path="/BusByCompany" component={BusByCompany} />
+      <MainRoutes exact path="/Promoter" component={Promoter} />
+      <MainRoutes exact path="/Inspector" component={Inspector} />
+      <MainRoutes exact path="/InspectorBus" component={InspectorBus} />
+      <MainRoutes exact path="/InspectorUser" component={InspectorUser} />
+      <MainRoutes exact path="/PromoterCharge" component={PromoterCharge} />
+      <MainRoutes
+        exact
+        path="/PromoterStatistic"
+        component={PromoterStatistic}
+      />
+      <MainRoutes exact path="/PaymentUser" component={ListPaymentUser} />
+      <MainRoutes exact path="/TripUser" component={ListTripUser} />
+      <MainRoutes exact path="/ChargingUser" component={ListChargingUser} />
+      <MainRoutes exact path="/UserPackages" component={UserPackages} />
+      <MainRoutes exact path="/RequestRoute" component={RequestRoute} />
+      <MainRoutes exact path="/RequestDetails" component={RequestDetails} />
+
+      <Routerr exact path="/Login" component={Login} />
+    </Switch>
+  );
 };
 
 export default Router;

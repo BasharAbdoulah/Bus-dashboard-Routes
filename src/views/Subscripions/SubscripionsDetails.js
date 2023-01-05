@@ -8,7 +8,6 @@ function SubscripionsDetails() {
   const [tableData, setTableData] = useState([]);
 
   const { subscriptionType } = useSelector((state) => state.modal);
-  console.log("state", subscriptionType);
 
   const {
     data = [],
@@ -16,11 +15,20 @@ function SubscripionsDetails() {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListPaymentWallet",
+    "https://route.click68.com/api/ListPackage",
     "post",
-    {},
+    {
+      PageSize: 21,
+    },
     true
   );
+  console.log(data);
+  useEffect(async () => {
+    const packages = data?.description.filter(
+      (packItem) => packItem.companyID === subscriptionType
+    );
+    setTableData(packages);
+  }, [data, error, loading]);
 
   useEffect(() => {
     if (true) executeFetch({ PageNumber: currentPage });
@@ -28,19 +36,34 @@ function SubscripionsDetails() {
 
   const columns = [
     {
-      title: "User Name",
+      title: "Company name",
+      dataIndex: "companyName",
+      key: "companyName",
+    },
+    {
+      title: "Description",
+      dataIndex: "desc",
+      key: "desc",
+    },
+    {
+      title: "Kind number",
+      dataIndex: "kind",
+      key: "kind",
+    },
+    {
+      title: "Kind",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Expire date",
-      dataIndex: "routeName",
-      key: "routeName",
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
     },
     {
-      title: "Subscription date",
-      dataIndex: "date",
-      key: "date",
+      title: "Create date",
+      dataIndex: "create_Date",
+      key: "create_Date",
       render: (data) => {
         if (data.length > 20)
           return (
@@ -51,9 +74,9 @@ function SubscripionsDetails() {
       },
     },
   ];
+
   return (
     <div>
-      <strong>{subscriptionType}</strong>
       <Table
         columns={columns}
         rowKey={"id"}
@@ -61,13 +84,13 @@ function SubscripionsDetails() {
           onChange: (page) => {
             setCurrentPage(page);
           },
-          total: data?.total,
+          total: tableData?.length,
           current: currentPage,
         }}
-        dataSource={data?.description}
+        dataSource={tableData}
         loading={loading}
         error={error}
-        size="small"
+        size={"middle"}
       />
     </div>
   );

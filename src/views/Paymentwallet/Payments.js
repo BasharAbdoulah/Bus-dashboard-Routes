@@ -8,6 +8,7 @@ const { Option } = Select;
 const Paymentwallet = () => {
   const onSearch = (value) => console.log(value);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage2, setCurrentPage2] = useState(1);
   const [tableData, setTableData] = useState([]);
 
   const [form] = Form.useForm();
@@ -92,6 +93,20 @@ const Paymentwallet = () => {
     executeFetch: executeFetchByuser,
   } = useFetch("https://route.click68.com/api/ListUser", "post", {}, true);
 
+  const {
+    data: PPackagesData = {},
+    error: PPackagesError,
+    loading: PPackagesLoading,
+    executeFetch: PPackagesExecute,
+  } = useFetch(
+    "https://route.click68.com/api/PaymentByPackage",
+    "post",
+    {},
+    true
+  );
+
+  console.log(PPackagesData);
+
   const columns = [
     {
       title: "User Name",
@@ -122,20 +137,83 @@ const Paymentwallet = () => {
       },
     },
   ];
-  console.log("formmmm");
-  console.log(form.getFieldsValue("RouteID"));
-  console.log(form.getFieldsValue("UserID"));
+
+  // "id": "f70cc0e2-f838-4641-9c69-86bdea4ecaad",
+  // "total": "0.000",
+  // "userID": "b692c12c-c4ba-4cee-b092-ac3cb276dd38",
+  // "user": null,
+  // "email": null,
+  // "name": null,
+  // "paymentCode": "khaled n638047628251068748",
+  // "payment_Date": "2022-11-23T01:14:09.2647086",
+  // "route": null,
+  // "description": "Paymaent By Package 2c18f4c8-cca0-4a07-5f94-08daccc5015a"
+
+  const columns2 = [
+    {
+      title: "Total",
+      dataIndex: "total",
+      key: "total",
+    },
+    {
+      title: "User",
+      dataIndex: "user",
+      key: "user",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Payment Code",
+      dataIndex: "paymentCode",
+      key: "paymentCode",
+    },
+    {
+      title: "Route",
+      dataIndex: "route",
+      key: "route",
+    },
+    {
+      title: "description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "Payment Date",
+      dataIndex: "payment_Date",
+      key: "payment_Date",
+      render: (data) => {
+        if (data.length > 20)
+          return (
+            <React.Fragment key={data}>
+              {data.substring(0, 10)} {data.substring(11, 16)}{" "}
+            </React.Fragment>
+          );
+      },
+    },
+  ];
+
   useEffect(() => {
     let isFound = tableData.find((d) => d.page === currentPage);
     if (!isFound) executeFetch({ PageNumber: currentPage });
   }, [currentPage]);
+  useEffect(() => {
+    executeFetch({ PageNumber: currentPage });
+  }, [currentPage2]);
 
   let tab_data = tableData.find((i) => i.page === currentPage);
 
   return (
     <div>
       <h2>Payments</h2>
-      <Form form={form} layout="vertical">
+      <Form style={{ minHeight: "668px" }} form={form} layout="vertical">
         <Row gutter={24}>
           <Col span={8}>
             <Form.Item name="RouteID" label="select route">
@@ -163,7 +241,6 @@ const Paymentwallet = () => {
                 }}
               >
                 {routedata?.description.map((item) => {
-                  // if (item.id === getData?.description?.routeId )
                   return <Option value={item.id}>{item.name}</Option>;
                 })}
               </Select>
@@ -218,10 +295,28 @@ const Paymentwallet = () => {
               : tab_data?.data
           }
           loading={loading || loadingByroute || userLoading}
-          size="small"
-          exportable
+          size="middle"
         />
       </Form>
+
+      <div className="packages-payments">
+        <h3>Payments By Packages</h3>
+        <h4>Payments Total: {PPackagesData?.description?.count}</h4>
+        <Table
+          columns={columns2}
+          rowKey={"id"}
+          pagination={{
+            onChange: (page) => {
+              setCurrentPage(page);
+            },
+            total: PPackagesData?.description?.count,
+            current: currentPage2,
+          }}
+          dataSource={PPackagesData?.description?.list}
+          loading={PPackagesLoading}
+          size="middle"
+        />
+      </div>
     </div>
   );
 };

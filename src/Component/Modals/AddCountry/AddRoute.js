@@ -115,7 +115,7 @@ const AddRoute = ({
 
   return (
     <Modal
-      visible={visible}
+      open={visible}
       onCancel={closeModal}
       title="Add Route"
       okButtonProps={{

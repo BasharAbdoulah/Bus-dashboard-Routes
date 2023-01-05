@@ -1,5 +1,7 @@
-import React, { useEffect, useState ,useRef } from "react";
-import { useDownloadExcel } from 'react-export-table-to-excel';
+import React, { useEffect, useState, useRef } from "react";
+import { useDownloadExcel } from "react-export-table-to-excel";
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
 import { CSVLink } from "react-csv";
 import { Table } from "ant-table-extensions";
 import {
@@ -8,7 +10,6 @@ import {
   Modal,
   message,
   Space,
- 
   Col,
   Row,
   Button,
@@ -28,6 +29,9 @@ import { connect } from "react-redux";
 import { openModal } from "redux/modal/action";
 import * as constants from "redux/modal/constants";
 const Bus = ({ token, openModal }) => {
+  const [data1, setData1] = useState([]);
+  const fileName = "myfile"; // here enter filename for your excel file
+
   const [value, setValue] = useState("");
   const {
     data = [],
@@ -37,12 +41,16 @@ const Bus = ({ token, openModal }) => {
   } = useFetch(
     "https://route.click68.com/api/ListBus",
     "get",
-    {},
+    { PageSize: 1000 },
     true,
     {},
     token
   );
- 
+  useEffect(() => {
+    if (data?.status === true && !loading) {
+      setData1(data?.description);
+    }
+  }, [data, error, loading]);
   const {
     data: activedata = {},
     error: activeError,
@@ -107,7 +115,6 @@ const Bus = ({ token, openModal }) => {
     else if (setValue === "unActive") return unactiveexecuteFetch();
   };
 
-  
   //handle  delete item
   const handleDeleteItem = (id) => {
     Modal.confirm({
@@ -123,7 +130,7 @@ const Bus = ({ token, openModal }) => {
   const handleEditItem = (id) => {
     openModal(constants.modalType_AddBus, executeFetch, { id }, true);
   };
- 
+
   const columns = [
     {
       title: "Company",
@@ -175,11 +182,21 @@ const Bus = ({ token, openModal }) => {
       },
     },
   ];
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+
+  const exportToCSV = (data1, fileName) => {
+    const ws = XLSX.utils.json_to_sheet(data1);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, fileName + fileExtension);
+  };
   return (
     <div>
       <Row>
         <Col>
-              
           <div>
             <Space>
               <Button
@@ -204,9 +221,8 @@ const Bus = ({ token, openModal }) => {
           </div>
         </Col>
       </Row>
-            
-     
-      <Table 
+
+      <Table
         columns={columns}
         dataSource={
           value === "Active"
@@ -216,8 +232,7 @@ const Bus = ({ token, openModal }) => {
             : data?.description
         }
         loading={loading || activeLoading}
-        size="small"
-        exportable
+        size="middle"
       />
     </div>
   );
