@@ -105,13 +105,15 @@ function Index() {
               }
             } onClick={() => {
               setSelectedMarker({busID: busID, lat: latitude1, lng: longitude1})
+        
             }} />
           )
         } )}
-          {/* {selectedMarker.busID &&  <InfoWindow position={{lat: selectedMarker?.lat, lng: selectedMarker?.lng }}>
+          {selectedMarker.busID &&  <InfoWindow position={{lat: selectedMarker?.lat, lng: selectedMarker?.lng }}>
           <h2>{selectedMarker?.busID}</h2>
-        </InfoWindow>} */}
+        </InfoWindow>} 
       </GoogleMap>
+      
     );
   }
 }
