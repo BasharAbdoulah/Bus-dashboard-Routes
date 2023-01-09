@@ -106,7 +106,7 @@ const Router = () => {
       <MainRoutes exact path="/PaymentByCompany" component={PaymentByCompany} />
       <MainRoutes exact path="/PaymentOfCompany" component={PaymentCompany} />
       <MainRoutes exact path="/Company" component={Company} />
-      {/* <MainRoutes exact path="/UserCompany" component={UserCompany} />  */}
+     <MainRoutes exact path="/UserCompany" component={UserCompany} />  
       <MainRoutes exact path="/DriverCompany" component={DriverCompany} />
       <MainRoutes exact path="/BusByCompany" component={BusByCompany} />
       <MainRoutes exact path="/Promoter" component={Promoter} />
