@@ -22,7 +22,7 @@ function Index() {
   const user = useSelector((state) => state.auth)
   const [connection, setConnection] = useState(null);
   const [connectionId, setConnectionId] = useState("");
-  const [selectedMarker, setSelectedMarker] = useState({busID: "",lat: "", lng: ""});
+  const [selectedMarker, setSelectedMarker] = useState({busID: "",lat: "", lng: "",routeName_EN:"",plateNumber:""});
 
   
   
@@ -97,20 +97,21 @@ function Index() {
   
     return (
       <GoogleMap zoom={mapOptions.zoom} center={mapOptions.center} mapContainerClassName="map-container">
-        {paymentLiveBus?.map(({latitude1,longitude1, busID}, index) => {
+        {paymentLiveBus?.map(({latitude1,longitude1, busID ,plateNumber,routeName_EN}, index) => {
           return (
             <Marker  key={index} position={{lat: latitude1, lng: longitude1}} options={
               {
                 icon: "http://maps.google.com/mapfiles/dir_6.png"
               }
             } onClick={() => {
-              setSelectedMarker({busID: busID, lat: latitude1, lng: longitude1})
+              setSelectedMarker({busID: busID, lat: latitude1, lng: longitude1,plateNumber:plateNumber ,routeName_EN:routeName_EN})
         
             }} />
           )
         } )}
           {selectedMarker.busID &&  <InfoWindow position={{lat: selectedMarker?.lat, lng: selectedMarker?.lng }}>
-          <h2>{selectedMarker?.busID}</h2>
+          <h2>Route :{selectedMarker?.routeName_EN}{""} {""}Plate Number:{selectedMarker?.plateNumber}</h2>
+        
         </InfoWindow>} 
       </GoogleMap>
       
