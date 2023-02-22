@@ -25,8 +25,19 @@ function Index() {
   const user = useSelector((state) => state.auth);
   const [connection, setConnection] = useState(null);
   const [connectionId, setConnectionId] = useState("");
-  const [lat, setLat] = useState(0);
-  console.log("render");
+
+  const obj1 = {
+    val1: "value",
+    val2: "value"
+  }
+  const obj2 = {
+    val1: "value3",
+    val2: "value"
+  }
+
+console.log(JSON.stringify(obj1) ===  JSON.stringify(obj2));
+
+
   useEffect(() => {
     const protocol = new signalR.JsonHubProtocol();
     const transport = signalR.HttpTransportType.WebSockets;
@@ -60,9 +71,18 @@ function Index() {
             connection.on("RecieveConnectionId", (id) => {
               setConnectionId(id);
             });
-            console.log("new arsdfsdfgasfgsdgr");
+            connection?.invoke("GetListBusMap");
+            connection?.on("ListBusMap", (data) => {
+
+                if(JSON.stringify(data) !==  JSON.stringify(paymentLiveBus)) {
+
+                  console.log("new data came", data);
+                  setPaymentLiveBus(data);
+                }
+
+            });
           })
-          .catch((err) => console.error("Failed To Connect", err));
+          .catch((err) => console.error("Failed To Connect", err))
       }
     }
 
@@ -70,22 +90,14 @@ function Index() {
   }, [connection]);
 
   console.log(JSON.stringify(paymentLiveBus));
-  useEffect(() => {
-    const interval = setInterval(() => {
-      console.log("re");
-      connection?.invoke("GetListBusMap");
-      connection?.on("ListBusMap", (data) => {
-        if (JSON.stringify(data) === JSON.stringify(paymentLiveBus)) {
-          console.log("SAME NEW DATA");
-          return "";
-        } else {
-          console.log("new data came", data);
-          setPaymentLiveBus(data);
-        }
-      });
-    }, 7000);
-    return () => clearInterval(interval);
-  }, [connection]);
+
+  // useEffect(() => {
+
+  //   const interval = setInterval(() => {
+  //     console.log("re");
+  //   }, 7000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: NEXT_PUBLIC_MAP_API_KEY,
@@ -99,12 +111,13 @@ function Index() {
       );
     }
   };
+  
+    if (!isLoaded) return <div>Loading...</div>;
+    return <Map />;
 
-  const Map = useMemo(() => {
+  function Map() {
     return (
       <>
-        <p>{lat}</p>
-        <button onClick={() => lat + 1}>Add</button>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: NEXT_PUBLIC_MAP_API_KEY,
@@ -122,7 +135,7 @@ function Index() {
               return (
                 <MyMarker
                   key={index}
-                  lat={latitude1 + lat}
+                  lat={latitude1}
                   lng={longitude1}
                   routeName={routeName_AR}
                   plateNumber={plateNumber}
@@ -133,10 +146,7 @@ function Index() {
         </GoogleMapReact>
       </>
     );
-  }, []);
-
-  if (!isLoaded) return <div>Loading...</div>;
-  return <Map />;
+  };
 }
 
 export default Index;
