@@ -1,5 +1,5 @@
 import * as signalR from "@microsoft/signalr";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLoadScript } from "@react-google-maps/api";
 import "./Style.css";
@@ -25,7 +25,8 @@ function Index() {
   const user = useSelector((state) => state.auth);
   const [connection, setConnection] = useState(null);
   const [connectionId, setConnectionId] = useState("");
-
+  const [lat, setLat] = useState(0);
+  console.log("render");
   useEffect(() => {
     const protocol = new signalR.JsonHubProtocol();
     const transport = signalR.HttpTransportType.WebSockets;
@@ -43,6 +44,7 @@ function Index() {
         options /*{ jwtBearer: token }*/
       )
       .withHubProtocol(protocol)
+      .withAutomaticReconnect()
       .build();
     setConnection(newConnection);
     return () => {};
@@ -59,24 +61,30 @@ function Index() {
               setConnectionId(id);
             });
             console.log("new arsdfsdfgasfgsdgr");
-            connection.invoke("GetListBusMap");
-            connection.on("ListBusMap", (data) => {
-              setPaymentLiveBus((prev) => {
-                let arr = prev;
-                arr.push(...data);
-                console.log("new aaaaà22äarr", arr);
-                return [...arr];
-              });
-            });
           })
           .catch((err) => console.error("Failed To Connect", err));
       }
     }
-    // else {
-    //   console.log("remove event listener");
-    //   window.removeEventListener("click", overlayClick);
-    // }
+
     console.log("connection is run");
+  }, [connection]);
+
+  console.log(JSON.stringify(paymentLiveBus));
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("re");
+      connection?.invoke("GetListBusMap");
+      connection?.on("ListBusMap", (data) => {
+        if (JSON.stringify(data) === JSON.stringify(paymentLiveBus)) {
+          console.log("SAME NEW DATA");
+          return "";
+        } else {
+          console.log("new data came", data);
+          setPaymentLiveBus(data);
+        }
+      });
+    }, 7000);
+    return () => clearInterval(interval);
   }, [connection]);
 
   const { isLoaded } = useLoadScript({
@@ -92,36 +100,43 @@ function Index() {
     }
   };
 
+  const Map = useMemo(() => {
+    return (
+      <>
+        <p>{lat}</p>
+        <button onClick={() => lat + 1}>Add</button>
+        <GoogleMapReact
+          bootstrapURLKeys={{
+            key: NEXT_PUBLIC_MAP_API_KEY,
+            language: "en",
+          }}
+          defaultCenter={mapOptions.center}
+          defaultZoom={mapOptions.zoom}
+          distanceToMouse={distanceToMouse}
+        >
+          {paymentLiveBus.map(
+            (
+              { latitude1, longitude1, id, routeName_AR, plateNumber },
+              index
+            ) => {
+              return (
+                <MyMarker
+                  key={index}
+                  lat={latitude1 + lat}
+                  lng={longitude1}
+                  routeName={routeName_AR}
+                  plateNumber={plateNumber}
+                />
+              );
+            }
+          )}
+        </GoogleMapReact>
+      </>
+    );
+  }, []);
+
   if (!isLoaded) return <div>Loading...</div>;
   return <Map />;
-
-  function Map() {
-    return (
-      <GoogleMapReact
-        bootstrapURLKeys={{
-          key: NEXT_PUBLIC_MAP_API_KEY,
-          language: "en",
-        }}
-        defaultCenter={mapOptions.center}
-        defaultZoom={mapOptions.zoom}
-        distanceToMouse={distanceToMouse}
-      >
-        {paymentLiveBus.map(
-          ({ latitude1, longitude1, id, routeName_AR, plateNumber }, index) => {
-            return (
-              <MyMarker
-                key={id}
-                lat={latitude1}
-                lng={longitude1}
-                routeName={routeName_AR}
-                plateNumber={plateNumber}
-              />
-            );
-          }
-        )}
-      </GoogleMapReact>
-    );
-  }
 }
 
 export default Index;
