@@ -2,7 +2,6 @@ import * as signalR from "@microsoft/signalr";
 import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import GoogleMap from "./GoogleMap";
-import Markers from "./Markers";
 
 import "./Style.css";
 
@@ -73,7 +72,6 @@ function Index() {
 
         if (JSON.stringify(data) !== JSON.stringify(paymentLiveBus)) {
           setPaymentLiveBus(data);
-          Markers(data)
         }
 
       });
