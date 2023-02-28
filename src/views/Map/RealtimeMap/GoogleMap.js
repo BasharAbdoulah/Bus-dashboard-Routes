@@ -33,7 +33,7 @@ const Map = ({ positions }) => {
                 scaledSize: new window.google.maps.Size(40, 40),
               }}
               key={index}
-              position={{ lat: bus.latitude1, lng: bus.longitude1 }}
+              position={{ lat: bus.latitude2, lng: bus.longitude2 }}
               onClick={() => {
                 setSelectedElement(bus);
               }}
@@ -46,8 +46,8 @@ const Map = ({ positions }) => {
           <InfoWindow
             visible={showInfoWindow}
             position={{
-              lat: selectedElement.latitude1,
-              lng: selectedElement.longitude1,
+              lat: selectedElement.latitude2,
+              lng: selectedElement.longitude2,
             }}
             onCloseClick={() => {
               setSelectedElement(null);

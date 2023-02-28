@@ -70,7 +70,7 @@ function Index() {
           setPaymentLiveBus(data);
         }
       });
-    }, 2000);
+    }, 500);
     return () => clearInterval(interval);
   }, [connection]);
 
