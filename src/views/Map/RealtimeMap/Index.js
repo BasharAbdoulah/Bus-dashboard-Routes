@@ -1,17 +1,17 @@
 import * as signalR from "@microsoft/signalr";
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { Spin } from "antd";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import GoogleMap from "./GoogleMap";
 
 import "./Style.css";
 
-
-
+const NEXT_PUBLIC_MAP_API_KEY = "AIzaSyDJ-2jJpL6Ast3hT88lvUx9S2F5COO0nSM";
+const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${NEXT_PUBLIC_MAP_API_KEY}`;
 
 // lat: 29.281596, our location
 // lng: 47.9602518,
 // 29.357743251785877, 47.99079476047599;
-
 
 function Index() {
   const [paymentLiveBus, setPaymentLiveBus] = useState([]);
@@ -20,7 +20,6 @@ function Index() {
   const [connection, setConnection] = useState(null);
   const [connectionId, setConnectionId] = useState("");
   const [count, setCount] = useState(1);
-
 
   useEffect(() => {
     const protocol = new signalR.JsonHubProtocol();
@@ -42,7 +41,7 @@ function Index() {
       .withAutomaticReconnect()
       .build();
     setConnection(newConnection);
-    return () => { };
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -56,7 +55,7 @@ function Index() {
               setConnectionId(id);
             });
           })
-          .catch((err) => console.error("Failed To Connect", err))
+          .catch((err) => console.error("Failed To Connect", err));
       }
     }
 
@@ -64,27 +63,32 @@ function Index() {
   }, [connection]);
 
   useEffect(() => {
-
     const interval = setInterval(() => {
-      console.log("re");
       connection?.invoke("GetListBusMap");
       connection?.on("ListBusMap", (data) => {
-
         if (JSON.stringify(data) !== JSON.stringify(paymentLiveBus)) {
           setPaymentLiveBus(data);
         }
-
       });
-    }, 5000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [connection]);
 
   return (
     <>
-      <GoogleMap positions={paymentLiveBus} />
+      <h1>
+        Existing Buses:{" "}
+        {paymentLiveBus?.length > 1 ? paymentLiveBus.length : <Spin />}
+      </h1>
+      <GoogleMap
+        positions={paymentLiveBus}
+        googleMapURL={mapURL}
+        loadingElement={<div style={{ height: `100%` }} />}
+        containerElement={<div className="mapContainer" />}
+        mapElement={<div style={{ height: `100%` }} />}
+      />
     </>
   );
-
 }
 
-export default Index
+export default Index;

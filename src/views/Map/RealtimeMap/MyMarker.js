@@ -13,7 +13,7 @@ const MyMarker = ({ routeName, plateNumber, $hover }) => {
     >
       <div className="shadow"></div>
       <span className="circleText center" title={routeName}>
-        {routeName}
+        {plateNumber}
       </span>
       {isShow && (
         <div className="info-window center">

@@ -1,12 +1,12 @@
-
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { useLoadScript } from "@react-google-maps/api";
 import "./Style.css";
-
-import GoogleMapReact from "google-map-react";
-import MyMarker from "./MyMarker";
-const NEXT_PUBLIC_MAP_API_KEY = "AIzaSyDJ-2jJpL6Ast3hT88lvUx9S2F5COO0nSM";
+import React, { useState } from "react";
+import {
+  GoogleMap,
+  withScriptjs,
+  withGoogleMap,
+  Marker,
+  InfoWindow,
+} from "react-google-maps";
 
 const mapOptions = {
   zoom: 13,
@@ -16,56 +16,52 @@ const mapOptions = {
   },
 };
 
-function GoogleMap({ positions }) {
+const Map = ({ positions }) => {
+  const [selectedElement, setSelectedElement] = useState(null);
+  const [activeMarker, setActiveMarker] = useState(null);
+  const [showInfoWindow, setInfoWindowFlag] = useState(true);
 
-  console.log("props", positions);
+  return (
+    <div className="gMapCont">
+      <GoogleMap defaultZoom={13} defaultCenter={mapOptions.center}>
+        {positions?.map((bus, index) => {
+          return (
+            <Marker
+              icon={{
+                // path: google.maps.SymbolPath.CIRCLE,
+                url: require("../../../static/bus-stop.png"),
+                scaledSize: new window.google.maps.Size(40, 40),
+              }}
+              key={index}
+              position={{ lat: bus.latitude1, lng: bus.longitude1 }}
+              onClick={() => {
+                setSelectedElement(bus);
+              }}
+            />
+          );
+        })}
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: NEXT_PUBLIC_MAP_API_KEY,
-  });
+        {/* infowindow */}
+        {selectedElement ? (
+          <InfoWindow
+            visible={showInfoWindow}
+            position={{
+              lat: selectedElement.latitude1,
+              lng: selectedElement.longitude1,
+            }}
+            onCloseClick={() => {
+              setSelectedElement(null);
+            }}
+          >
+            <div>
+              <h1>Route Name: {selectedElement?.routeName_AR}</h1>
+              <h1>Plate Number: :{selectedElement?.plateNumber}</h1>
+            </div>
+          </InfoWindow>
+        ) : null}
+      </GoogleMap>
+    </div>
+  );
+};
 
-  const distanceToMouse = (pt, mp) => {
-    if (pt && mp) {
-      // return distance between the marker and mouse pointer
-      return Math.sqrt(
-        (pt.x - mp.x) * (pt.x - mp.x) + (pt.y - mp.y) * (pt.y - mp.y)
-      );
-    }
-  };
-
-  if (!isLoaded) return <div>Loading...</div>;
-  return <Map />;
-
-  function Map() {
-    return (
-      <GoogleMapReact
-        bootstrapURLKeys={{
-          key: NEXT_PUBLIC_MAP_API_KEY,
-          language: "en",
-        }}
-        defaultCenter={mapOptions.center}
-        defaultZoom={mapOptions.zoom}
-        distanceToMouse={distanceToMouse}
-      >
-        {positions.map(
-          (
-            { latitude1, longitude1, id, routeName_AR, plateNumber },
-            index
-          ) => {
-            return (
-              <MyMarker
-                key={index}
-                lat={latitude1}
-                lng={longitude1}
-                routeName={routeName_AR}
-                plateNumber={plateNumber}
-              />
-            );
-          }
-        )}
-      </GoogleMapReact>
-    )
-  }
-}
-
-export default GoogleMap;
+export default withScriptjs(withGoogleMap(Map));
