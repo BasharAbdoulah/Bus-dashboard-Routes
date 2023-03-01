@@ -77,7 +77,7 @@ function Index() {
   return (
     <>
       <h1>
-        Existing Buses:{" "}
+        Existing Buses :{" "}
         {paymentLiveBus?.length > 1 ? paymentLiveBus.length : <Spin />}
       </h1>
       <GoogleMap
