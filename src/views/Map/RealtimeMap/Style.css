@@ -67,3 +67,14 @@
 .mapContainer > div {
   margin: 20px 20px;
 }
+
+.gm-style-iw {
+  position: relative !important;
+  width: fit-content !important;
+  font-size: 9px !important;
+  padding: 0 !important;
+}
+
+.gm-style .gm-style-iw-tc {
+  display: none;
+}

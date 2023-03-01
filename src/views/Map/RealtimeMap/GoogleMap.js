@@ -18,7 +18,7 @@ const mapOptions = {
 
 const Map = ({ positions }) => {
   const [selectedElement, setSelectedElement] = useState(null);
-  const [activeMarker, setActiveMarker] = useState(null);
+
   const [showInfoWindow, setInfoWindowFlag] = useState(true);
 
   return (
@@ -26,22 +26,47 @@ const Map = ({ positions }) => {
       <GoogleMap defaultZoom={13} defaultCenter={mapOptions.center}>
         {positions?.map((bus, index) => {
           return (
-            <Marker
-              icon={{
-                // path: google.maps.SymbolPath.CIRCLE,
-                url: require("../../../static/bus-stop.png"),
-                scaledSize: new window.google.maps.Size(40, 40),
-              }}
-              key={index}
-              position={{ lat: bus.latitude2, lng: bus.longitude2 }}
-              onClick={() => {
-                setSelectedElement(bus);
-              }}
-            />
+            <>
+              <Marker
+                title={bus.plateNumber}
+                icon={{
+                  // path: google.maps.SymbolPath.CIRCLE,
+                  url: require("../../../static/bus-stop.png"),
+                  scaledSize: new window.google.maps.Size(40, 40),
+                }}
+                key={index}
+                position={{ lat: bus.latitude2, lng: bus.longitude2 }}
+                onClick={() => {
+                  setSelectedElement(bus);
+                }}
+              >
+                <p>test</p>
+              </Marker>
+            </>
           );
         })}
 
         {/* infowindow */}
+        {/* {positions?.map((bus, index) => {
+          return (
+            <div className="plate-win">
+              <InfoWindow
+                onCloseClick={false}
+                children={<p>test</p>}
+                visible={true}
+                position={{
+                  lat: bus.latitude2,
+                  lng: bus.longitude2,
+                }}
+              >
+                <div>
+                  <h1>Plate34545 Number: :{selectedElement?.plateNumber}</h1>
+                </div>
+              </InfoWindow>
+            </div>
+          );
+        })} */}
+
         {selectedElement ? (
           <InfoWindow
             visible={showInfoWindow}

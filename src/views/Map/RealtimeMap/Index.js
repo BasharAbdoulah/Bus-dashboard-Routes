@@ -19,7 +19,6 @@ function Index() {
   const user = useSelector((state) => state.auth);
   const [connection, setConnection] = useState(null);
   const [connectionId, setConnectionId] = useState("");
-  const [count, setCount] = useState(1);
 
   useEffect(() => {
     const protocol = new signalR.JsonHubProtocol();
@@ -77,7 +76,7 @@ function Index() {
   return (
     <>
       <h1>
-        Existing Buses:{" "}
+        Existing Buses:
         {paymentLiveBus?.length > 1 ? paymentLiveBus.length : <Spin />}
       </h1>
       <GoogleMap
