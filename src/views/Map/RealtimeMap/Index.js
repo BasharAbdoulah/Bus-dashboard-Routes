@@ -1,23 +1,17 @@
 import * as signalR from "@microsoft/signalr";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Spin } from "antd";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLoadScript } from "@react-google-maps/api";
+import GoogleMap from "./GoogleMap";
+
 import "./Style.css";
 
-import GoogleMapReact from "google-map-react";
-import MyMarker from "./MyMarker";
 const NEXT_PUBLIC_MAP_API_KEY = "AIzaSyDJ-2jJpL6Ast3hT88lvUx9S2F5COO0nSM";
+const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${NEXT_PUBLIC_MAP_API_KEY}`;
 
 // lat: 29.281596, our location
 // lng: 47.9602518,
 // 29.357743251785877, 47.99079476047599;
-const mapOptions = {
-  zoom: 13,
-  center: {
-    lat: 29.357743251785877,
-    lng: 47.99079476047599,
-  },
-};
 
 function Index() {
   const [paymentLiveBus, setPaymentLiveBus] = useState([]);
@@ -25,8 +19,7 @@ function Index() {
   const user = useSelector((state) => state.auth);
   const [connection, setConnection] = useState(null);
   const [connectionId, setConnectionId] = useState("");
-  const [lat, setLat] = useState(0);
-  console.log("render");
+
   useEffect(() => {
     const protocol = new signalR.JsonHubProtocol();
     const transport = signalR.HttpTransportType.WebSockets;
@@ -60,7 +53,6 @@ function Index() {
             connection.on("RecieveConnectionId", (id) => {
               setConnectionId(id);
             });
-            console.log("new arsdfsdfgasfgsdgr");
           })
           .catch((err) => console.error("Failed To Connect", err));
       }
@@ -69,74 +61,33 @@ function Index() {
     console.log("connection is run");
   }, [connection]);
 
-  console.log(JSON.stringify(paymentLiveBus));
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("re");
       connection?.invoke("GetListBusMap");
       connection?.on("ListBusMap", (data) => {
-        if (JSON.stringify(data) === JSON.stringify(paymentLiveBus)) {
-          console.log("SAME NEW DATA");
-          return "";
-        } else {
-          console.log("new data came", data);
+        if (JSON.stringify(data) !== JSON.stringify(paymentLiveBus)) {
           setPaymentLiveBus(data);
         }
       });
-    }, 7000);
+    }, 500);
     return () => clearInterval(interval);
   }, [connection]);
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: NEXT_PUBLIC_MAP_API_KEY,
-  });
-
-  const distanceToMouse = (pt, mp) => {
-    if (pt && mp) {
-      // return distance between the marker and mouse pointer
-      return Math.sqrt(
-        (pt.x - mp.x) * (pt.x - mp.x) + (pt.y - mp.y) * (pt.y - mp.y)
-      );
-    }
-  };
-
-  const Map = useMemo(() => {
-    return (
-      <>
-        <p>{lat}</p>
-        <button onClick={() => lat + 1}>Add</button>
-        <GoogleMapReact
-          bootstrapURLKeys={{
-            key: NEXT_PUBLIC_MAP_API_KEY,
-            language: "en",
-          }}
-          defaultCenter={mapOptions.center}
-          defaultZoom={mapOptions.zoom}
-          distanceToMouse={distanceToMouse}
-        >
-          {paymentLiveBus.map(
-            (
-              { latitude1, longitude1, id, routeName_AR, plateNumber },
-              index
-            ) => {
-              return (
-                <MyMarker
-                  key={index}
-                  lat={latitude1 + lat}
-                  lng={longitude1}
-                  routeName={routeName_AR}
-                  plateNumber={plateNumber}
-                />
-              );
-            }
-          )}
-        </GoogleMapReact>
-      </>
-    );
-  }, []);
-
-  if (!isLoaded) return <div>Loading...</div>;
-  return <Map />;
+  return (
+    <>
+      <h1>
+        Existing Buses:
+        {paymentLiveBus?.length > 1 ? paymentLiveBus.length : <Spin />}
+      </h1>
+      <GoogleMap
+        positions={paymentLiveBus}
+        googleMapURL={mapURL}
+        loadingElement={<div style={{ height: `100%` }} />}
+        containerElement={<div className="mapContainer" />}
+        mapElement={<div style={{ height: `100%` }} />}
+      />
+    </>
+  );
 }
 
 export default Index;
