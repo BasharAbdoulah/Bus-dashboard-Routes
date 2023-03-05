@@ -70,11 +70,17 @@
 
 .gm-style-iw {
   position: relative !important;
+  top: -10px;
   width: fit-content !important;
-  font-size: 9px !important;
-  padding: 0 !important;
+  font-size: 12px !important;
+  padding: 4px 4px 0px 4px !important;
+}
+
+.gm-style .gm-style-iw-c {
+  top: 16px !important;
+  padding:5px;
 }
 
 .gm-style .gm-style-iw-tc {
-  display: none;
+  top: 17px !important;
 }
