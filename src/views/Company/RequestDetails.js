@@ -16,7 +16,7 @@ const RequestDetails = () => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/GetRouteRequest",
+    `${process.env.REACT_APP_API_HOST}api/GetRouteRequest`,
     "post",
     { id },
 

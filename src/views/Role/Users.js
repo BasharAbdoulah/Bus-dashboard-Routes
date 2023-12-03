@@ -48,7 +48,7 @@ const Users = () => {
     error,
     loading,
     executeFetch,
-  } = useFetch("https://route.click68.com/api/WalletUser", "post", {}, true);
+  } = useFetch(`${process.env.REACT_APP_API_HOST}api/WalletUser`, "post", {}, true);
 
   console.log("pagenation", data);
   useEffect(async () => {
@@ -92,7 +92,7 @@ const Users = () => {
     loading: disActiveLoading,
     executeFetch: disActiveExecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/DeactivateUserByAdmin",
+    `${process.env.REACT_APP_API_HOST}api/DeactivateUserByAdmin`,
     "post",
     {},
     false
@@ -104,7 +104,7 @@ const Users = () => {
     loading: activeLoading,
     executeFetch: activeExecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/ActivateUserByAdmin",
+    `${process.env.REACT_APP_API_HOST}api/ActivateUserByAdmin`,
     "post",
     {},
     false

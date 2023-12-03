@@ -13,7 +13,7 @@ function CompanyUserPackages() {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListPackageByUserIdForCompany",
+    `${process.env.REACT_APP_API_HOST}api/ListPackageByUserIdForCompany`,
     "post",
     {
       userId: id,

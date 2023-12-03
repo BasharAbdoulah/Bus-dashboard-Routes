@@ -33,12 +33,12 @@ const Promoter = ({ openModal }) => {
     error,
     loading,
     executeFetch,
-  } = useFetch("https://route.click68.com/api/WalletPromoter", "post", true);
+  } = useFetch(`${process.env.REACT_APP_API_HOST}api/WalletPromoter`, "post", true);
 
   useEffect(async () => {
     await axios
       .post(
-        "https://route.click68.com/api/WalletPromoter",
+        `${process.env.REACT_APP_API_HOST}api/WalletPromoter`,
         {
           PageNumber: currentPage,
         },

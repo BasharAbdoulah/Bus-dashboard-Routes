@@ -51,7 +51,7 @@ const AddBusCompany = ({
     loading: editLoading,
     executeFetch: editExecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/company/EditBus",
+    `${process.env.REACT_APP_API_HOST}api/company/EditBus`,
     "post",
     {},
     false

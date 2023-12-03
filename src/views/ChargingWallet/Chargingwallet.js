@@ -17,7 +17,7 @@ const Chargingwallet = () => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListChrgingWallet",
+    `${process.env.REACT_APP_API_HOST}api/ListChrgingWallet`,
     "post",
     {},
     true
@@ -55,7 +55,7 @@ const Chargingwallet = () => {
   //   loading: loadingByroute,
   //   executeFetch: executeFetchByroute,
   // } = useFetch(
-  //   "https://route.click68.com/api/ListPaymentWalletByRouyeID",
+  //   "${process.env.REACT_APP_API_HOST}api/ListPaymentWalletByRouyeID",
   //   "post",
   //   {},
   //   true
@@ -67,7 +67,7 @@ const Chargingwallet = () => {
     loading: loadingByUser,
     executeFetch: executeFetchByuserId,
   } = useFetch(
-    "https://route.click68.com/api/ListChrgingWalletByUserID",
+    `${process.env.REACT_APP_API_HOST}api/ListChrgingWalletByUserID`,
     "post",
     {},
     true
@@ -90,7 +90,7 @@ const Chargingwallet = () => {
     error: userError,
     loading: userLoading,
     executeFetch: executeFetchByuser,
-  } = useFetch("https://route.click68.com/api/ListUser", "post", {}, true);
+  } = useFetch(`${process.env.REACT_APP_API_HOST}api/ListUser`, "post", {}, true);
 
   const columns = [
     {

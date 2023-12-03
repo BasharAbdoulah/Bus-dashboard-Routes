@@ -5,7 +5,6 @@ import { Modal, Form, Row, Col, Input, Alert, Select } from "antd";
 import { connect } from "react-redux";
 //redux action
 import { closeModal } from "redux/modal/action";
-
 //hooks
 import useFetch from "hooks/useFetch";
 import { useState } from "react";
@@ -27,8 +26,9 @@ const AddBus = ({
     "post",
     {},
     false
-  );
-  //get data to change
+    );
+
+    //get data to change
   const {
     data: getData,
     error: getError,
@@ -70,7 +70,7 @@ const AddBus = ({
     error: companyerror,
     loading: companyloading,
     executeFetch: companyexecuteFetch,
-  } = useFetch("https://route.click68.com/api/ListCompany", "post", {}, false);
+  } = useFetch(`${process.env.REACT_APP_API_HOST}/api/ListCompany`, "post", {}, false);
   function onSearch(value) {
     console.log("search:", value);
   }

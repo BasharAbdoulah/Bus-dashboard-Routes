@@ -35,7 +35,7 @@ const Route = ({ openModal }) => {
     error,
     loading,
     executeFetch,
-  } = useFetch("https://route.click68.com/api/ListRoute", "post", {}, false);
+  } = useFetch(`${process.env.REACT_APP_API_HOST}api/ListRoute`, "post", {}, false);
 
   // for delete action
   const {

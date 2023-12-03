@@ -39,7 +39,7 @@ const Bus = ({ token, openModal }) => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListBus",
+    `${process.env.REACT_APP_API_HOST}api/ListBus`,
     "get",
     { PageSize: 1000 },
     true,
@@ -57,7 +57,7 @@ const Bus = ({ token, openModal }) => {
     loading: activeLoading,
     executeFetch: activeExecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListBusActive",
+    `${process.env.REACT_APP_API_HOST}api/ListBusActive`,
     "post",
     {},
     true,
@@ -70,7 +70,7 @@ const Bus = ({ token, openModal }) => {
     loading: unactiveloading,
     executeFetch: unactiveexecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListBusNotActive",
+    `${process.env.REACT_APP_API_HOST}api/ListBusNotActive`,
     "post",
     {},
     true,

@@ -75,7 +75,7 @@ const Home = ({ token, role, companyID }) => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/CountRoute",
+    `${process.env.REACT_APP_API_HOST}api/CountRoute`,
     "get",
     {},
     role?.includes("superAdmin") || role?.includes("admin") ? true : false,
@@ -89,7 +89,7 @@ const Home = ({ token, role, companyID }) => {
     loading: stationLoading,
     StationexecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/CountStation",
+    `${process.env.REACT_APP_API_HOST}api/CountStation`,
     "get",
     {},
     role?.includes("superAdmin") || role?.includes("admin") ? true : false,
@@ -103,7 +103,7 @@ const Home = ({ token, role, companyID }) => {
   //   loading: paymentDataLoading,
   //   PaymentDataexecuteFetch,
   // } = useFetch(
-  //   "https://route.click68.com/api/company/PaymentByCompany",
+  //   "${process.env.REACT_APP_API_HOST}api/company/PaymentByCompany",
   //   "post",
   //   { PageSize: 1000 },
   //   true,
@@ -116,7 +116,7 @@ const Home = ({ token, role, companyID }) => {
   //   loading: sumpaymentCompanyLoading,
   //   SumpaymentCompanyexecuteFetch,
   // } = useFetch(
-  //   "https://route.click68.com/api/SumPaymentByCompany",
+  //   "${process.env.REACT_APP_API_HOST}api/SumPaymentByCompany",
   //   "get",
   //   {},
   //   role?.includes("Company") ? true : false,
@@ -129,7 +129,7 @@ const Home = ({ token, role, companyID }) => {
   //   loading: countpaymentCompanyLoading,
   //   CountpaymentCompanyexecuteFetch,
   // } = useFetch(
-  //   "https://route.click68.com/api/CountPaymentByCompany",
+  //   "${process.env.REACT_APP_API_HOST}api/CountPaymentByCompany",
   //   "get",
   //   {},
   //   role?.includes("Company") ? true : false,
@@ -144,7 +144,7 @@ const Home = ({ token, role, companyID }) => {
     loading: stationRouteLoading,
     RouteStationexecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/CountRouteStation",
+    `${process.env.REACT_APP_API_HOST}api/CountRouteStation`,
     "get",
     {},
     role?.includes("superAdmin") || role?.includes("admin") ? true : false,
@@ -199,7 +199,7 @@ const Home = ({ token, role, companyID }) => {
   useEffect(() => {
     const getData = async () => {
       const { data: CountPaymentData } = await axios.get(
-        "https://route.click68.com/api/CountPayment",
+        `${process.env.REACT_APP_API_HOST}api/CountPayment`,
 
         {
           headers: {
@@ -208,7 +208,7 @@ const Home = ({ token, role, companyID }) => {
         }
       );
       const { data: CountChargeData } = await axios.get(
-        "https://route.click68.com/api/CountCharge",
+        `${process.env.REACT_APP_API_HOST}api/CountCharge`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -216,7 +216,7 @@ const Home = ({ token, role, companyID }) => {
         }
       );
       const { data: CountTripData } = await axios.get(
-        "https://route.click68.com/api/CountTrip",
+        `${process.env.REACT_APP_API_HOST}api/CountTrip`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -224,7 +224,7 @@ const Home = ({ token, role, companyID }) => {
         }
       );
       const { data: SumPaymentData } = await axios.get(
-        "https://route.click68.com/api/SumPaymentWallet",
+        `${process.env.REACT_APP_API_HOST}api/SumPaymentWallet`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -232,7 +232,7 @@ const Home = ({ token, role, companyID }) => {
         }
       );
       const { data: SumChargetData } = await axios.get(
-        "https://route.click68.com/api/SumChargeWallet",
+        `${process.env.REACT_APP_API_HOST}api/SumChargeWallet`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

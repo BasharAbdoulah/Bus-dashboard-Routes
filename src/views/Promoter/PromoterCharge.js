@@ -21,7 +21,7 @@ const PromoterCharge = () => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ChargeByPrometorStstic",
+    `${process.env.REACT_APP_API_HOST}api/ChargeByPrometorStstic`,
     "post",
     { id },
 

@@ -28,7 +28,7 @@ const RouteStation = ({ openModal }) => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListRouteStation",
+    `${process.env.REACT_APP_API_HOST}api/ListRouteStation`,
     "post",
     {},
     false

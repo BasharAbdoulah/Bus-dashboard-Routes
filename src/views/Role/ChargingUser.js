@@ -19,7 +19,7 @@ const ListChargingUser = () => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListChargingUser",
+    `${process.env.REACT_APP_API_HOST}api/ListChargingUser`,
     "post",
     { id, PageSize: 1000 },
 

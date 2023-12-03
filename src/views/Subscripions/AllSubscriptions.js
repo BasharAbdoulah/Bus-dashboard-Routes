@@ -14,7 +14,7 @@ function AllSubscriptions() {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListPackageForAllKindSubscriber",
+    `${process.env.REACT_APP_API_HOST}api/ListPackageForAllKindSubscriber`,
     "post",
     true
   );

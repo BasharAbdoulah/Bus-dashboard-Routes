@@ -23,7 +23,7 @@ const Role = ({ openModal }) => {
     error,
     loading,
     executeFetch,
-  } = useFetch("https://route.click68.com/api/ListRole", "get");
+  } = useFetch(`${process.env.REACT_APP_API_HOST}api/ListRole`, "get");
 
   const {
     data: deleteData = {},

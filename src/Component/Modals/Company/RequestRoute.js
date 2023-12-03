@@ -23,7 +23,7 @@ const AddBusCompany = ({
   const [editId, setEditId] = useState(null);
   //for add bus
   const { data, error, loading, executeFetch } = useFetch(
-    "https://route.click68.com/api/company/RequestRoute",
+    `${process.env.REACT_APP_API_HOST}api/company/RequestRoute`,
 
     "post",
     {},

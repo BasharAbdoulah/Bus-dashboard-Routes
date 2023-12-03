@@ -21,7 +21,7 @@ function OnlinePassengers() {
   });
 
   const { data, error, loading, executeFetch } = useFetch(
-    "https://route.click68.com/api/ListPaymentWallet",
+    `${process.env.REACT_APP_API_HOST}api/ListPaymentWallet`,
     "post",
     {},
     true

@@ -101,7 +101,7 @@ const Map = ({ token }) => {
 
   const getStationsByRouteID = async () => {
     const { data: res } = await axios.post(
-      "https://route.click68.com/api/ListStationByRouteID",
+      `${process.env.REACT_APP_API_HOST}api/ListStationByRouteID`,
       {
         PageSize: 1000,
         id,
@@ -378,7 +378,7 @@ const Map = ({ token }) => {
         value: true,
       });
       const { data: res } = await axios.post(
-        "https://route.click68.com/api/FindRoute",
+        `${process.env.REACT_APP_API_HOST}api/FindRoute`,
         {
           Longitude1: startPoint.lng,
           Latitude1: startPoint.lat,

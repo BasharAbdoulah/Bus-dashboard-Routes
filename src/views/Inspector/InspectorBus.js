@@ -21,7 +21,7 @@ const InspectorBus = () => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListInspictionBusByInspectorID",
+    `${process.env.REACT_APP_API_HOST}api/ListInspictionBusByInspectorID`,
     "post",
     { id, PageSize: 100 },
 

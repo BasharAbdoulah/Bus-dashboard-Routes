@@ -42,7 +42,7 @@ const RequestRoute = ({ token, openModal }) => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListRouteRequest",
+    `${process.env.REACT_APP_API_HOST}api/ListRouteRequest`,
     "post",
 
     true
@@ -53,7 +53,7 @@ const RequestRoute = ({ token, openModal }) => {
     loading: unreadLoading,
     executeFetch: unreadExecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/UnreadRouteRequest",
+    `${process.env.REACT_APP_API_HOST}api/UnreadRouteRequest`,
     "post",
     {},
     false
@@ -64,7 +64,7 @@ const RequestRoute = ({ token, openModal }) => {
     loading: deleteLoading,
     executeFetch: deleteExecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/DeletMultiRouteRequest",
+    `${process.env.REACT_APP_API_HOST}api/DeletMultiRouteRequest`,
     "post",
     {},
     false

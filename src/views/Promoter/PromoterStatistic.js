@@ -21,7 +21,7 @@ const PromoterStatistic = () => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/InstallByPrometorStstic",
+    `${process.env.REACT_APP_API_HOST}api/InstallByPrometorStstic`,
     "post",
     { id },
 

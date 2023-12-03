@@ -165,7 +165,7 @@ const MultiMap = ({ token }) => {
         value: true,
       });
       const { data: res } = await axios.post(
-        "https://route.click68.com/api/FindMultiRoute1",
+        `${process.env.REACT_APP_API_HOST}api/FindMultiRoute1`,
         {
           Longitude1: startPoint.lng,
           Latitude1: startPoint.lat,

@@ -22,7 +22,7 @@ const Inspector = ({ openModal }) => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/WalletInspector",
+    `${process.env.REACT_APP_API_HOST}api/WalletInspector`,
     "post",
     {},
     true
@@ -31,7 +31,7 @@ const Inspector = ({ openModal }) => {
   useEffect(async () => {
     await axios
       .post(
-        "https://route.click68.com/api/WalletInspector",
+        `${process.env.REACT_APP_API_HOST}api/WalletInspector`,
         {
           PageNumber: currentPage,
         },

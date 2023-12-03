@@ -15,7 +15,7 @@ function SubscripionsDetails() {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListPackage",
+    `${process.env.REACT_APP_API_HOST}api/ListPackage`,
     "post",
     {
       PageSize: 21,

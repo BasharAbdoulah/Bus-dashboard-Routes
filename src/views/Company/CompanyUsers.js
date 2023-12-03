@@ -15,7 +15,7 @@ function CompanyUsers() {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListUserByCompanyId",
+    `${process.env.REACT_APP_API_HOST}api/ListUserByCompanyId`,
     "post",
     {
       id: "4fe6fa3d-87d3-4ac4-e93a-08da2b65d3ff",

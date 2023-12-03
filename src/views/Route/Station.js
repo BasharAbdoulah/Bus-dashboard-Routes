@@ -19,7 +19,7 @@ const Station = ({ openModal }) => {
     error,
     loading,
     executeFetch,
-  } = useFetch("https://route.click68.com/api/ListStation", "post", {}, false);
+  } = useFetch(`${process.env.REACT_APP_API_HOST}api/ListStation`, "post", {}, false);
   // for delete action
   useEffect(() => {
     if (data?.status === true && !loading) {

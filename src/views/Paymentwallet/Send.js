@@ -20,7 +20,7 @@ const Send = () => {
   useEffect(async () => {
     await axios
       .post(
-        "https://route.click68.com/api/ListCharcheAllSender",
+        `${process.env.REACT_APP_API_HOST}api/ListCharcheAllSender`,
         {
           PageNumber: currentPage,
           id: user.id,

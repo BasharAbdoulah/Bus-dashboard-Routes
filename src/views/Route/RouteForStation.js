@@ -20,7 +20,7 @@ const RouteForStation = () => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListRouteByStationID",
+    `${process.env.REACT_APP_API_HOST}api/ListRouteByStationID`,
     "post",
     { id },
 

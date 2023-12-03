@@ -39,12 +39,12 @@ const DeletedUsers = () => {
   //     error,
   //     loading,
   //     executeFetch,
-  // } = useFetch("https://route.click68.com/api/ListDeleteAccount", "post", {}, true);
+  // } = useFetch("${process.env.REACT_APP_API_HOST}api/ListDeleteAccount", "post", {}, true);
 
   useEffect(async () => {
     await axios
       .post(
-        "https://route.click68.com/api/ListDeleteAccount",
+        `${process.env.REACT_APP_API_HOST}api/ListDeleteAccount`,
         {
           PageNumber: currentPage,
           id: user.id,

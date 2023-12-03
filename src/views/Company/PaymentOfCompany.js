@@ -31,7 +31,7 @@ const PaymentCompany = ({ token, role, companyID }) => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/company/PaymentByCompany",
+    `${process.env.REACT_APP_API_HOST}api/company/PaymentByCompany`,
     "post",
     { PageSize: 1000 },
     true,
@@ -45,7 +45,7 @@ const PaymentCompany = ({ token, role, companyID }) => {
     loading: sumpaymentCompanyLoading,
     SumpaymentCompanyexecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/SumPaymentByCompany",
+    `${process.env.REACT_APP_API_HOST}api/SumPaymentByCompany`,
     "get",
     {},
     role?.includes("Company") ? true : false,
@@ -58,7 +58,7 @@ const PaymentCompany = ({ token, role, companyID }) => {
     loading: countpaymentCompanyLoading,
     CountpaymentCompanyexecuteFetch,
   } = useFetch(
-    "https://route.click68.com/api/CountPaymentByCompany",
+    `${process.env.REACT_APP_API_HOST}api/CountPaymentByCompany`,
     "get",
     {},
     role?.includes("Company") ? true : false,

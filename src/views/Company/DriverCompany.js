@@ -23,7 +23,7 @@ const DriverCompany = ({ token, openModal }) => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/company/DriverByCompany",
+    `${process.env.REACT_APP_API_HOST}api/company/DriverByCompany`,
     "post",
 
     true

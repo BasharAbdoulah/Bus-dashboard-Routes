@@ -53,7 +53,7 @@ const AddDriver = ({
     error: companyerror,
     loading: companyloading,
     executeFetch: companyexecuteFetch,
-  } = useFetch("https://route.click68.com/api/ListCompany", "post", {}, false);
+  } = useFetch(`${process.env.REACT_APP_API_HOST}api/ListCompany`, "post", {}, false);
 
   function onSearch(value) {
     console.log("search:", value);

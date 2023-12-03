@@ -21,7 +21,7 @@ const Driver = ({ token, openModal }) => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListDriver",
+    `${process.env.REACT_APP_API_HOST}api/ListDriver`,
     "post",
     {},
     true,

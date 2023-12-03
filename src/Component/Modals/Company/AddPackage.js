@@ -26,14 +26,14 @@ function AddPackage({ onAddOk, packageData, editMode }) {
     error: error,
     loading: loading,
     executeFetch: executeFetch,
-  } = useFetch("https://route.click68.com/api/AddPackage", "post", {}, false);
+  } = useFetch(`${process.env.REACT_APP_API_HOST}api/AddPackage`, "post", {}, false);
 
   const {
     data: editData,
     error: editError,
     loading: editLoading,
     executeFetch: editExecuteFetch,
-  } = useFetch("https://route.click68.com/api/EditPackage", "post", {}, false);
+  } = useFetch(`${process.env.REACT_APP_API_HOST}api/EditPackage`, "post", {}, false);
 
   const emptyFields = () => {
     setDescription("");

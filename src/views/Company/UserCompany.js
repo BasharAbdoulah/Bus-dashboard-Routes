@@ -33,7 +33,7 @@ const UserCompany = ({ token, openModal }) => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListUserCompany",
+    `${process.env.REACT_APP_API_HOST}api/ListUserCompany`,
     "post",
     {},
     true,

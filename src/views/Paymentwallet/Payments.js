@@ -18,7 +18,7 @@ const Paymentwallet = () => {
     loading,
     executeFetch,
   } = useFetch(
-    "https://route.click68.com/api/ListPaymentWallet",
+    `${process.env.REACT_APP_API_HOST}api/ListPaymentWallet`,
     "post",
     {},
     true
@@ -56,7 +56,7 @@ const Paymentwallet = () => {
     loading: loadingByroute,
     executeFetch: executeFetchByroute,
   } = useFetch(
-    "https://route.click68.com/api/ListPaymentWalletByRouyeID",
+    `${process.env.REACT_APP_API_HOST}api/ListPaymentWalletByRouyeID`,
     "post",
     {},
     true
@@ -68,7 +68,7 @@ const Paymentwallet = () => {
     loading: loadingByUser,
     executeFetch: executeFetchByuserId,
   } = useFetch(
-    "https://route.click68.com/api/ListPaymentWalletByUserID",
+    `${process.env.REACT_APP_API_HOST}api/ListPaymentWalletByUserID`,
     "post",
     {},
     true
@@ -91,7 +91,7 @@ const Paymentwallet = () => {
     error: userError,
     loading: userLoading,
     executeFetch: executeFetchByuser,
-  } = useFetch("https://route.click68.com/api/ListUser", "post", {}, true);
+  } = useFetch(`${process.env.REACT_APP_API_HOST}api/ListUser`, "post", {}, true);
 
   const {
     data: PPackagesData = {},
@@ -99,7 +99,7 @@ const Paymentwallet = () => {
     loading: PPackagesLoading,
     executeFetch: PPackagesExecute,
   } = useFetch(
-    "https://route.click68.com/api/PaymentByPackage",
+    `${process.env.REACT_APP_API_HOST}api/PaymentByPackage`,
     "post",
     {},
     true
