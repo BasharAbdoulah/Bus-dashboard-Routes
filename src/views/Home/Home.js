@@ -173,6 +173,7 @@ const Home = ({ token, role, companyID }) => {
   //   countpaymentCompanyError,
   //   countpaymentCompanyLoading,
   // ]);
+  console.log(process.env.REACT_APP_API_HOST)
 
   useEffect(() => {
     const protocol = new signalR.JsonHubProtocol();
@@ -273,10 +274,12 @@ const Home = ({ token, role, companyID }) => {
     // window.addEventListener("click", overlayClick) PaymentLive;
     if (connection) {
       if (!connection.connectionStarted) {
+        console.log("con", connection)
         connection
-          .start()
-          .then((result) => {
-            connection.on("RecieveConnectionId", (id) => {
+        .start()
+        .then((result) => {
+          connection.on("RecieveConnectionId", (id) => {
+              console.log("result of con",result)
               setConnectionId(id);
             });
 
@@ -373,7 +376,6 @@ const Home = ({ token, role, companyID }) => {
     console.log("connection is run");
   }, [connection]);
 
-  console.log("[tripCount, CountCharge, CountPayment]");
   console.log([tripCount, CountCharge, CountPayment]);
 
   let config = {
