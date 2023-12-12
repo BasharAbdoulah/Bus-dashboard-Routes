@@ -186,7 +186,7 @@ const Chargingwallet = () => {
               ? dataByUser?.description
               : tab_data?.data
           }
-          loading={loading || userLoading}
+          loading={loading}
           exportable
         />
       </Form>
