@@ -173,7 +173,7 @@ const Home = ({ token, role, companyID }) => {
   //   countpaymentCompanyError,
   //   countpaymentCompanyLoading,
   // ]);
-  console.log(process.env.REACT_APP_API_HOST)
+
 
   useEffect(() => {
     const protocol = new signalR.JsonHubProtocol();
@@ -188,14 +188,59 @@ const Home = ({ token, role, companyID }) => {
 
     const newConnection = new signalR.HubConnectionBuilder()
       .withUrl(
-        process.env.REACT_APP_API_HOST + "chathub",
-        options /*{ jwtBearer: token }*/
-      )
-      .withHubProtocol(protocol)
-      .build();
+        process.env.REACT_APP_API_HOST + "chathub"
+      ).build();
+
     setConnection(newConnection);
+    
     return () => {};
   }, []);
+
+
+
+
+  // Test connection 
+  // useEffect(() => {
+  //   // Initialize SignalR connection
+  //   const newConnection = new signalR.HubConnectionBuilder()
+  //     .withUrl(process.env.REACT_APP_API_HOST + "chathub") // Replace with your hub URL
+  //     .build();
+
+  //   setConnection(newConnection);
+
+  //   // Start the connection
+  //   newConnection
+  //     .start()
+  //     .then(() => {
+  //       console.log('SignalR connection established.');
+  //       console.log(newConnection)
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error starting SignalR connection:', error);
+  //     });
+
+  //   // // Event handlers
+  //   newConnection.on("PaymentCount", (string) => {
+  //     // audio?.play();
+  //     console.log("11string");
+  //     console.log(string);
+  //     setCountPayment({
+  //       ...CountPayment,
+  //       value: parseInt(string),
+  //     });
+  //   });
+
+  //   // Cleanup on unmount
+  //   return () => {
+  //     if (newConnection) {
+  //       newConnection.stop();
+  //     }
+  //   };
+  // }, []);
+
+
+
+
 
   useEffect(() => {
     const getData = async () => {
@@ -265,26 +310,31 @@ const Home = ({ token, role, companyID }) => {
         value: parseFloat(SumChargetData.description).toFixed(3),
       });
     };
-    console.log("ddgdgd");
-    console.log("ddgdgd");
+
     getData();
   }, []);
+
+
 
   useEffect(() => {
     // window.addEventListener("click", overlayClick) PaymentLive;
     if (connection) {
       if (!connection.connectionStarted) {
-        console.log("con", connection)
         connection
         .start()
-        .then((result) => {
+        .then(() => {
+          console.log("Connection is on")
+        })
+        .catch((err) => console.error("Failed To Connect", err));
+
+        /// Events ///
           connection.on("RecieveConnectionId", (id) => {
-              console.log("result of con",result)
+              console.log("connection after start", id)
               setConnectionId(id);
             });
 
+            //////
             connection.on("TripCount", (string) => {
-              console.log("1212 string");
               console.log(string);
               audio?.play();
               setTripCount({
@@ -292,6 +342,8 @@ const Home = ({ token, role, companyID }) => {
                 value: parseInt(string),
               });
             });
+
+            /////
             connection.on("ChargeCount", (string) => {
               audio?.play();
               console.log("11string");
@@ -301,6 +353,8 @@ const Home = ({ token, role, companyID }) => {
                 value: parseInt(string),
               });
             });
+
+            //////
             connection.on("PaymentCount", (string) => {
               audio?.play();
               console.log("11string");
@@ -310,6 +364,8 @@ const Home = ({ token, role, companyID }) => {
                 value: parseInt(string),
               });
             });
+
+            ////
             connection.on("ChargeValueCount", (string) => {
               audio?.play();
               console.log("11string");
@@ -319,6 +375,7 @@ const Home = ({ token, role, companyID }) => {
                 value: parseFloat(string).toFixed(3),
               });
             });
+
             // connection.on("PaymentLiveBus", (paymentData) => {
             //   play();
             //   console.log("paymentData");
@@ -365,18 +422,15 @@ const Home = ({ token, role, companyID }) => {
               console.log("PaymentLive string");
               console.log(string);
             });
-          })
-          .catch((err) => console.error("Failed To Connect", err));
+
       }
     }
     // else {
     //   console.log("remove event listener");
     //   window.removeEventListener("click", overlayClick);
     // }
-    console.log("connection is run");
   }, [connection]);
 
-  console.log([tripCount, CountCharge, CountPayment]);
 
   let config = {
     appendPadding: 10,
@@ -399,7 +453,6 @@ const Home = ({ token, role, companyID }) => {
       },
     ],
   };
-  console.log("Sum", SumPayment);
 
   const columns = [
     {
